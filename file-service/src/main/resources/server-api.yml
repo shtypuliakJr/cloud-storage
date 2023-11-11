@@ -3,11 +3,11 @@ info:
   title: Cloud Storage File Service
   version: 1.0.0
 paths:
-  # FileUploadController
+  # UploadFileController
   /cs-api/files/data:
     post:
       tags:
-        - file-upload-controller
+        - upload-file-controller
       summary: Upload file
       operationId: uploadFile
       requestBody:
