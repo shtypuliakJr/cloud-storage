@@ -1,0 +1,31 @@
+openapi: 3.0.3
+info:
+  title: Cloud Storage File Service
+  version: 1.0.0
+paths:
+  # FileUploadController
+  /cs-api/files/data:
+    post:
+      tags:
+        - file-upload-controller
+      summary: Upload file
+      operationId: uploadFile
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [ "file" ]
+              properties:
+                file:
+                  type: string
+                  format: binary
+        required: true
+        description: File for saving
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: FileUploadDTO

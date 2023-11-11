@@ -1,36 +1,64 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '2.7.17'
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
+    id 'org.springframework.boot' version "${springframeworkBootVersion}"
+    id 'io.spring.dependency-management' version "${springDependencyManagmentVersion}"
+    id "org.openapi.generator" version "${openapiGeneratorVersion}"
 }
 
 group = 'edu.nau.cs.file.service'
 version = 'undefined'
 
 java {
-	sourceCompatibility = '17'
+    sourceCompatibility = '17'
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation "org.springdoc:springdoc-openapi-ui:${openapiVer}"
+    implementation "org.openapitools:jackson-databind-nullable:${openapiJacksonVer}"
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
+test {
+    useJUnitPlatform()
 }
+
+openApiValidate {
+    inputSpec = "$rootDir/src/main/resources/server-api.yml"
+}
+
+openApiGenerate {
+    generatorName = "spring"
+    inputSpec = "$rootDir/src/main/resources/server-api.yml"
+    outputDir = "$buildDir/generated"
+    apiPackage = "edu.nau.cs.file.service.controller"
+    modelPackage = "edu.nau.cs.file.service.model"
+    configOptions = [
+            dateLibrary  : "java8",
+            interfaceOnly: "true",
+            useTags      : "true"
+    ]
+    importMappings = [
+            "FileUploadDTO": "edu.nau.cs.file.service.dto.FileUploadDTO",
+            "ErrorDTO": "edu.nau.cs.file.service.dto.ErrorDTO",
+    ]
+}
+
+compileJava.dependsOn tasks.openApiGenerate
+sourceSets.main.java.srcDir "$buildDir/generated/src/main/java"
+sourceSets.main.resources.srcDir "$buildDir/generated/src/main/resources"
