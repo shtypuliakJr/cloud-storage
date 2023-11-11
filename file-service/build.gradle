@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'edu.nau.cs.file.service'
-version = '0.0.1-SNAPSHOT'
+version = 'undefined'
 
 java {
 	sourceCompatibility = '17'
