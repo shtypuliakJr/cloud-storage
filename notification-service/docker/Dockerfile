@@ -15,8 +15,8 @@ ARG VERSION
 ENV JAVA_OPTS -Dspring.config.additional-location=file:/opt/file-service/application.properties
 ENV JAVA_DEBUG -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:6001
 
-COPY --from=builder /src/build/libs/file-service-${VERSION}.jar /opt/file-service/file-service.jar
+COPY --from=builder /src/build/libs/file-service-$VERSION.jar /opt/file-service/file-service.jar
 COPY ./docker/local-application.properties /opt/file-service/application.properties
 
 WORKDIR /opt/file-service/
-CMD java ${JAVA_OPTS} ${JAVA_DEBUG} -jar file-service.jar
+CMD java $JAVA_OPTS $JAVA_DEBUG -jar file-service.jar

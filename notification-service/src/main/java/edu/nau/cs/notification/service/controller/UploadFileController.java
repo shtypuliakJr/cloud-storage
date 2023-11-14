@@ -1,4 +1,4 @@
-package edu.nau.cs.file.service.controller;
+package edu.nau.cs.notification.service.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
