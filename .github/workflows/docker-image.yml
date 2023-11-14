@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build ./file-service/docker --file Dockerfile --tag file-service-tag:$(date +%s)
+      run: docker build ./file-service --file ./file-service/docker/Dockerfile --tag file-service-tag:$(date +%s)
