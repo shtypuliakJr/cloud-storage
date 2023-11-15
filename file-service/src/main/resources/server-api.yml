@@ -28,4 +28,4 @@ paths:
           content:
             application/json:
               schema:
-                $ref: FileUploadDTO
+                $ref: FileMetaDTO

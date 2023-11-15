@@ -9,7 +9,7 @@ services:
       args:
         VERSION: undefined
     depends_on:
-      - db-file-service
+      - db-cloud-storage
       - cloud-storage-minio
     ports:
       - "8010:8080"
@@ -23,12 +23,12 @@ services:
       - ${NETWORK_NAME}
 
 
-  db-file-service:
+  db-cloud-storage:
     image: postgres:12.4-alpine
-    container_name: db-file-service
-    hostname: db-file-service
+    container_name: db-cloud-storage
+    hostname: db-cloud-storage
     volumes:
-      - mpgdata:/var/lib/postgresql/data-postgres-file-service
+      - mpgdata:/var/lib/postgresql/data-postgres-cloud-storage
     expose:
       - 5440
     ports:
@@ -36,7 +36,7 @@ services:
     command: -p 5440
     environment:
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: file-service_db
+      POSTGRES_DB: cloud-storage_db
       ENV_VAR_NAME: ${COMPOSE_PROJECT_NAME}
     networks:
       - ${NETWORK_NAME}
@@ -54,8 +54,9 @@ services:
     entrypoint: sh
     command: -c 'mkdir -p /data/cs-dev && minio server /data --console-address ":9001"'
     environment:
-      MINIO_ACCESS_KEY: dummy_key
-      MINIO_SECRET_KEY: dummy_secret
+      MINIO_DOCKER_NAME: cloud-storage-minio
+      MINIO_ROOT_USER: dummy_key
+      MINIO_ROOT_PASSWORD: dummy_secret
       ENV_VAR_NAME: ${COMPOSE_PROJECT_NAME}
     networks:
       - ${NETWORK_NAME}

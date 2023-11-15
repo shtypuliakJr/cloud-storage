@@ -21,6 +21,7 @@ public class AwsS3ServiceImpl implements AwsS3Service {
                 .bucket(bucketName)
                 .key(fileUploadPayload.getS3Key())
                 .build();
+
         s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(fileUploadPayload.getBody(), fileUploadPayload.getSize()));
     }
 

@@ -39,6 +39,7 @@ public class AwsS3Config {
                 .credentialsProvider(awsCredentialsProvider)
                 .overrideConfiguration(clientOverrideConfiguration)
                 .httpClient(ApacheHttpClient.create())
+                .forcePathStyle(true)
                 .build();
     }
 
@@ -50,6 +51,7 @@ public class AwsS3Config {
                 .endpointOverride(URI.create(awsS3FsEndpoint))
                 .credentialsProvider(awsCredentialsProvider)
                 .overrideConfiguration(clientOverrideConfiguration)
+                .forcePathStyle(true)
                 .build();
     }
 

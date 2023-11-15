@@ -59,11 +59,12 @@ openApiGenerate {
             useTags      : "true"
     ]
     importMappings = [
-            "FileUploadDTO": "edu.nau.cs.file.service.dto.FileUploadDTO",
+            "FileMetaDTO": "edu.nau.cs.file.service.dto.FileMetaDTO",
             "ErrorDTO": "edu.nau.cs.file.service.dto.ErrorDTO",
     ]
 }
 
+tasks.openApiGenerate.dependsOn tasks.processResources
 compileJava.dependsOn tasks.openApiGenerate
 sourceSets.main.java.srcDir "$buildDir/generated/src/main/java"
 sourceSets.main.resources.srcDir "$buildDir/generated/src/main/resources"
