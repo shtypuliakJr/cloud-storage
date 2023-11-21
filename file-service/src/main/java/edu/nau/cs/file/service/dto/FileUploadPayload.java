@@ -9,7 +9,9 @@ import java.io.InputStream;
 @Builder(setterPrefix = "with")
 public class FileUploadPayload {
 
-    public String s3Key;
+    public String originalFilename;
+
+    public String contentType;
 
     public InputStream body;
 

@@ -1,13 +1,17 @@
 package edu.nau.cs.file.service.service.get;
 
-import edu.nau.cs.file.service.dto.FileDTO;
+import edu.nau.cs.file.service.dto.FileObjectDTO;
 
 import java.util.List;
 
 public interface GetFileService {
 
-    FileDTO getFile(String fileId);
+    FileObjectDTO getFile(String fileId);
 
-    List<FileDTO> getFiles(List<String> fileIds);
+    List<FileObjectDTO> getFiles(List<String> fileIds);
+
+    FileObjectDTO getArchivedFiles(List<String> fileIds);
+
+    FileObjectDTO getArchivedFileChunks(String fileId, List<String> chunkIds);
 
 }

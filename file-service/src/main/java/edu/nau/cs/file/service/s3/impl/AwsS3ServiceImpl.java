@@ -1,6 +1,6 @@
 package edu.nau.cs.file.service.s3.impl;
 
-import edu.nau.cs.file.service.dto.FileUploadPayload;
+import edu.nau.cs.file.service.dto.FileChunkPayload;
 import edu.nau.cs.file.service.exception.CsFileServiceS3FileIOException;
 import edu.nau.cs.file.service.s3.AwsS3ErrorCode;
 import edu.nau.cs.file.service.s3.AwsS3Service;
@@ -48,10 +48,10 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     }
 
     @Override
-    public S3Item uploadObject(FileUploadPayload fileUploadPayload, String bucket) {
+    public S3Item uploadObject(FileChunkPayload fileUploadPayload, String bucket) {
         PutObjectResponse response = s3Client.putObject(request -> request.key(fileUploadPayload.getS3Key()).bucket(bucket),
                 RequestBody.fromInputStream(fileUploadPayload.getBody(), fileUploadPayload.getSize()));
-        return new S3Item(fileUploadPayload.s3Key, response.eTag(), response.versionId());
+        return new S3Item(fileUploadPayload.getS3Key(), response.eTag(), response.versionId());
     }
 
     @Override

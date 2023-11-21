@@ -9,9 +9,8 @@ import java.util.List;
 @Service
 public class GetFileChunkServiceImpl implements GetFileChunkService {
 
-
     @Override
-    public FileChunkDTO getFileChunk(String fileChunkId) {
+    public FileChunkDTO getFileChunk(String fileId, String fileChunkId) {
         return null;
     }
 

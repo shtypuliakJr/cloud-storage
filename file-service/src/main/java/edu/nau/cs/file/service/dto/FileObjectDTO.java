@@ -5,11 +5,9 @@ import lombok.Data;
 import java.io.InputStream;
 
 @Data
-public class FileChunkDTO {
+public class FileObjectDTO {
 
     private String originalFileName;
-
-    private String chunkId;
 
     private Long size;
 

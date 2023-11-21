@@ -2,14 +2,14 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version "${springframeworkBootVersion}"
     id 'io.spring.dependency-management' version "${springDependencyManagmentVersion}"
-    id "org.openapi.generator" version "${openapiGeneratorVersion}"
+    id 'org.openapi.generator' version "${openapiGeneratorVersion}"
 }
 
 group = 'edu.nau.cs.file.service'
 version = 'undefined'
 
 java {
-    sourceCompatibility = '17'
+    sourceCompatibility = 17
 }
 
 configurations {
@@ -23,20 +23,20 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springdoc:springdoc-openapi-ui:${openapiVer}"
     implementation "org.openapitools:jackson-databind-nullable:${openapiJacksonVer}"
     implementation platform("software.amazon.awssdk:bom:${awssdkVersion}")
     implementation "software.amazon.awssdk:s3"
     implementation "software.amazon.awssdk:apache-client"
 
-    compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'org.postgresql:postgresql'
+    compileOnly "org.projectlombok:lombok"
+    runtimeOnly "org.postgresql:postgresql"
 
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    annotationProcessor "org.projectlombok:lombok"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
 test {
@@ -61,6 +61,12 @@ openApiGenerate {
     importMappings = [
             "FileMetaDTO": "edu.nau.cs.file.service.dto.FileMetaDTO",
             "ErrorDTO": "edu.nau.cs.file.service.dto.ErrorDTO",
+            "DeleteObjectResponseDTO": "edu.nau.cs.file.service.dto.DeleteObjectResponseDTO",
+            "DeleteChunkResponseDTO": "edu.nau.cs.file.service.dto.DeleteChunkResponseDTO",
+            "FileUploadDTO": "edu.nau.cs.file.service.dto.FileUploadDTO",
+            "FileChunkUploadDTO": "edu.nau.cs.file.service.dto.FileChunkUploadDTO",
+            "FileChunkDeleteDTO": "edu.nau.cs.file.service.dto.FileChunkDeleteDTO",
+            "FileObjectDeleteDTO": "edu.nau.cs.file.service.dto.FileObjectDeleteDTO",
     ]
 }
 

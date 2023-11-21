@@ -1,13 +1,13 @@
 package edu.nau.cs.file.service.service.delete;
 
-import edu.nau.cs.file.service.dto.FileChunkMetaDTO;
+import edu.nau.cs.file.service.dto.FileChunkDeleteDTO;
 
 import java.util.List;
 
 public interface DeleteFileChunkService {
 
-    FileChunkMetaDTO deleteFileChunk(String fileChunkId);
+    FileChunkDeleteDTO deleteFileChunk(String fileId, String fileChunkId);
 
-    List<FileChunkMetaDTO> deleteFileChunks(List<String> fileChunkIds);
+    List<FileChunkDeleteDTO> deleteFileChunks(List<String> fileChunkIds);
 
 }

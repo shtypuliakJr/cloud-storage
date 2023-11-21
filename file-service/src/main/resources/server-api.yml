@@ -3,8 +3,27 @@ info:
   title: Cloud Storage File Service
   version: 1.0.0
 paths:
-  # UploadFileController
-  /cs-api/files/data:
+  /cs-api/files:
+    get:
+      tags:
+        - get-file-controller
+      summary: Get files archive
+      operationId: downloadFilesZip
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            multipart/form-data:
+              schema:
+                type: string
+                format: binary
     post:
       tags:
         - upload-file-controller
@@ -20,6 +39,10 @@ paths:
                 file:
                   type: string
                   format: binary
+                path:
+                  type: string
+                folderParentId:
+                  type: string
         required: true
         description: File for saving
       responses:
@@ -28,4 +51,273 @@ paths:
           content:
             application/json:
               schema:
-                $ref: FileMetaDTO
+                $ref: FileUploadDTO
+  /cs-api/files/{fileId}/chunks:
+    get:
+      tags:
+        - get-file-controller
+      summary: Get file chunks archive
+      operationId: downloadFileChunksZip
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            multipart/form-data:
+              schema:
+                type: string
+                format: binary
+    post:
+      tags:
+        - upload-file-controller
+      summary: Upload file chunk
+      operationId: uploadFileChunk
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [ "chunk" ]
+              properties:
+                chunk:
+                  type: string
+                  format: binary
+                chunkPosition:
+                  type: integer
+                chunksCount:
+                  type: integer
+        required: true
+        description: File for saving
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: FileChunkUploadDTO
+  /cs-api/files/{fileId}:
+    get:
+      tags:
+        - get-file-controller
+      summary: Get file by id
+      operationId: downloadFile
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            multipart/form-data:
+              schema:
+                type: string
+                format: binary
+    delete:
+      tags:
+        - delete-file-controller
+      summary: Delete file by id
+      operationId: deleteFile
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: FileObjectDeleteDTO
+  /cs-api/files/batch:
+    post:
+      tags:
+        - upload-file-controller
+      summary: Upload multiple files
+      operationId: uploadBulkFiles
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [ "files" ]
+              properties:
+                files:
+                  type: object
+                  items:
+                    type: string
+                    format: binary
+                path:
+                  type: string
+                folderParentId:
+                  type: string
+        required: true
+        description: File for saving
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: FileUploadDTO
+    delete:
+      tags:
+        - delete-file-controller
+      summary: Delete file by id
+      operationId: deleteBatchFiles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: FileObjectDeleteDTO
+  /cs-api/files/{fileId}/chunks/{chunkId}:
+    get:
+      tags:
+        - get-file-controller
+      summary: Get file chunk by id
+      operationId: downloadFileChunk
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: chunkId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            multipart/form-data:
+              schema:
+                type: string
+                format: binary
+    delete:
+      tags:
+        - delete-file-controller
+      summary: Delete file by id
+      operationId: deleteFileChunk
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: chunkId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: FileChunkDeleteDTO
+  /cs-api/files/{fileId}/chunks/batch:
+    post:
+      tags:
+        - upload-file-controller
+      summary: Upload multiple chunks
+      operationId: uploadBulkFileChunks
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [ "chunks" ]
+              properties:
+                chunks:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                chunkPosition:
+                  type: integer
+                chunksCount:
+                  type: integer
+        required: true
+        description: Chunks for saving
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: FileChunkUploadDTO
+    delete:
+      tags:
+        - delete-file-controller
+      summary: Delete file by id
+      operationId: deleteBatchFileChunks
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: FileChunkDeleteDTO
