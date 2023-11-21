@@ -12,10 +12,10 @@ RUN gradle clean assemble -Pversion=$VERSION
 FROM $JAVA_IMG
 
 ARG VERSION
-ENV JAVA_OPTS -Dspring.config.additional-location=meta:/opt/meta-service/application.properties
-ENV JAVA_DEBUG -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:6002
+ENV JAVA_OPTS -Dspring.config.additional-location=file:/opt/meta-service/application.properties
+ENV JAVA_DEBUG -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:6001
 
-COPY --from=builder /src/build/libs/meta-service.jar /opt/meta-service/meta-service-$VERSION.jar
+COPY --from=builder /src/build/libs/meta-service-$VERSION.jar /opt/meta-service/meta-service.jar
 COPY ./docker/local-application.properties /opt/meta-service/application.properties
 
 WORKDIR /opt/meta-service/

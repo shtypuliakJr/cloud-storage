@@ -23,6 +23,25 @@ services:
       - ${NETWORK_NAME}
 
 
+  cs-meta-service:
+    build:
+      context: ../meta-service
+      dockerfile: ./docker/Dockerfile
+      args:
+        VERSION: undefined
+    depends_on:
+      - db-cloud-storage
+      - cloud-storage-minio
+    hostname: cs-meta-service
+    ports:
+      - "8011:8080"
+      - "6002:6001"
+    environment:
+      ENV_VAR_NAME: ${COMPOSE_PROJECT_NAME}
+    networks:
+      - ${NETWORK_NAME}
+
+
   db-cloud-storage:
     image: postgres:12.4-alpine
     container_name: db-cloud-storage

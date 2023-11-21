@@ -1,7 +1,7 @@
 package edu.nau.cs.file.service.service.upload.impl;
 
-import edu.nau.cs.file.service.dto.FileChunkMetaDTO;
-import edu.nau.cs.file.service.dto.FileChunkUploadPayload;
+import edu.nau.cs.file.service.dto.FileChunkUploadDTO;
+import edu.nau.cs.file.service.dto.FileUploadPayload;
 import edu.nau.cs.file.service.service.upload.UploadFileChunkService;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +10,14 @@ import java.util.List;
 @Service
 public class UploadFileChunkServiceImpl implements UploadFileChunkService {
 
+
     @Override
-    public FileChunkMetaDTO uploadFileChunk(FileChunkUploadPayload fileChunkUploadPayload) {
+    public FileChunkUploadDTO uploadFileChunk(String fileId, FileUploadPayload filePayload, String userId, Integer chunkPosition, Integer chunksCount) {
         return null;
     }
 
     @Override
-    public List<FileChunkMetaDTO> uploadFileChunks(List<FileChunkUploadPayload> fileChunkUploadPayloads) {
+    public List<FileChunkUploadDTO> uploadFileChunks(String fileId, List<FileUploadPayload> fileUploadPayloads, String userId, Integer chunkPosition, Integer chunksCount) {
         return null;
     }
 
