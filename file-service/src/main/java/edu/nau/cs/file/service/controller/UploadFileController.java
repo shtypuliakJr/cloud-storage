@@ -3,6 +3,7 @@ package edu.nau.cs.file.service.controller;
 import edu.nau.cs.file.service.dto.FileChunkUploadDTO;
 import edu.nau.cs.file.service.dto.FileUploadDTO;
 import edu.nau.cs.file.service.dto.FileUploadPayload;
+import edu.nau.cs.file.service.service.upload.UploadFileChunkService;
 import edu.nau.cs.file.service.service.upload.UploadFileService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -17,7 +18,8 @@ import java.util.List;
 public class UploadFileController implements UploadFileControllerApi {
 
     private final UploadFileService uploadFileService;
-    private String userId = "shtepa";
+    private final UploadFileChunkService uploadFileChunkService;
+    private final String userId = "shtepa";
 
     @Override
     public ResponseEntity<FileUploadDTO> uploadFile(MultipartFile file, String path, String folderParentId) {
@@ -32,13 +34,13 @@ public class UploadFileController implements UploadFileControllerApi {
 
     @Override
     public ResponseEntity<FileChunkUploadDTO> uploadFileChunk(String fileId, MultipartFile chunk, Integer chunkPosition, Integer chunksCount) {
-        return ResponseEntity.ok(uploadFileService.uploadFileChunk(fileId, createFilePayload(chunk), userId, chunkPosition, chunksCount));
+        return ResponseEntity.ok(uploadFileChunkService.uploadFileChunk(fileId, createFilePayload(chunk), userId, chunkPosition, chunksCount));
     }
 
     @Override
     public ResponseEntity<List<FileChunkUploadDTO>> uploadBulkFileChunks(String fileId, List<MultipartFile> chunks, Integer chunkPosition, Integer chunksCount) {
         List<FileUploadPayload> fileUploadPayloads = chunks.stream().map(this::createFilePayload).toList();
-        return ResponseEntity.ok(uploadFileService.uploadFileChunks(fileId, fileUploadPayloads, userId, chunkPosition, chunksCount));
+        return ResponseEntity.ok(uploadFileChunkService.uploadFileChunks(fileId, fileUploadPayloads, userId, chunkPosition, chunksCount));
     }
 
     @SneakyThrows

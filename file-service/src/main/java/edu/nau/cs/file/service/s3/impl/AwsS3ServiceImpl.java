@@ -1,6 +1,6 @@
 package edu.nau.cs.file.service.s3.impl;
 
-import edu.nau.cs.file.service.dto.FileChunkPayload;
+import edu.nau.cs.file.service.dto.S3FileChunkPayload;
 import edu.nau.cs.file.service.exception.CsFileServiceS3FileIOException;
 import edu.nau.cs.file.service.s3.AwsS3ErrorCode;
 import edu.nau.cs.file.service.s3.AwsS3Service;
@@ -21,6 +21,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Objects;
 
 @RequiredArgsConstructor
@@ -48,16 +49,26 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     }
 
     @Override
-    public S3Item uploadObject(FileChunkPayload fileUploadPayload, String bucket) {
-        PutObjectResponse response = s3Client.putObject(request -> request.key(fileUploadPayload.getS3Key()).bucket(bucket),
+    public S3Item uploadObject(S3FileChunkPayload fileUploadPayload, String bucket) {
+        PutObjectResponse response = s3Client.putObject(request -> request
+                        .key(fileUploadPayload.getS3Key())
+                        .bucket(bucket)
+                        .contentLength(fileUploadPayload.getSize()),
                 RequestBody.fromInputStream(fileUploadPayload.getBody(), fileUploadPayload.getSize()));
-        return new S3Item(fileUploadPayload.getS3Key(), response.eTag(), response.versionId());
+        return new S3Item(fileUploadPayload.getS3Key(), response.eTag(), response.versionId(), response.checksumCRC32());
+    }
+
+    @Override
+    public List<S3Item> uploadObjects(List<S3FileChunkPayload> fileUploadPayloads, String bucket) {
+        return fileUploadPayloads.stream()
+                .map(fileUploadPayload -> this.uploadObject(fileUploadPayload, bucket))
+                .toList();
     }
 
     @Override
     public S3Item deleteObject(String key, String bucket) {
         DeleteObjectResponse response = s3Client.deleteObject(request -> request.key(key).bucket(bucket));
-        return new S3Item(key, null, response.versionId());
+        return new S3Item(key, null, response.versionId(), null);
     }
 
     @Override

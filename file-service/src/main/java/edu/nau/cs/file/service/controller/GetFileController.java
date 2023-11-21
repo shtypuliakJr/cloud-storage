@@ -21,6 +21,7 @@ public class GetFileController implements GetFileControllerApi {
 
     private final GetFileService getFileService;
     private final GetFileChunkService getFileChunkService;
+    private final String userId = "shtepa";
 
     @Override
     public ResponseEntity<Resource> downloadFile(String fileId) {

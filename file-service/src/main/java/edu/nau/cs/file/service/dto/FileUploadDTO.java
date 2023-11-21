@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Builder(setterPrefix = "with")
@@ -16,5 +17,7 @@ public class FileUploadDTO implements Serializable {
 
     @JsonProperty(value = "originalFilename")
     private String originalFilename;
+
+    private List<FileChunkUploadDTO> fileChunkUploadDTOs;
 
 }

@@ -1,6 +1,9 @@
 package edu.nau.cs.file.service.util;
 
-public class S3KeyPathResolver {
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
+public final class S3KeyPathResolver {
 
     private static final String KEY_SEPARATOR = "/";
     private static final String S3_PATH_TEMPLATE = "{userLeftPartition}/{userRightPartition}/{userId}/{fileId}";

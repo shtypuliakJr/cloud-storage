@@ -9,12 +9,12 @@ import java.io.InputStream;
 @Builder(setterPrefix = "with")
 public class FileUploadPayload {
 
-    public String originalFilename;
+    private String originalFilename;
 
-    public String contentType;
+    private String contentType;
 
-    public InputStream body;
+    private InputStream body;
 
-    public long size;
+    private long size;
 
 }
