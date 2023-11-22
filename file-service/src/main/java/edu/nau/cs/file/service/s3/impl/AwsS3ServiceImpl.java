@@ -55,14 +55,7 @@ public class AwsS3ServiceImpl implements AwsS3Service {
                         .bucket(bucket)
                         .contentLength(fileUploadPayload.getSize()),
                 RequestBody.fromInputStream(fileUploadPayload.getBody(), fileUploadPayload.getSize()));
-        return new S3Item(fileUploadPayload.getS3Key(), response.eTag(), response.versionId(), response.checksumCRC32());
-    }
-
-    @Override
-    public List<S3Item> uploadObjects(List<S3FileChunkPayload> fileUploadPayloads, String bucket) {
-        return fileUploadPayloads.stream()
-                .map(fileUploadPayload -> this.uploadObject(fileUploadPayload, bucket))
-                .toList();
+        return new S3Item(fileUploadPayload.getS3Key(), response.eTag(), response.versionId());
     }
 
     @Override
@@ -75,7 +68,7 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     @Override
     public S3Item deleteObject(String key, String bucket) {
         DeleteObjectResponse response = s3Client.deleteObject(request -> request.key(key).bucket(bucket));
-        return new S3Item(key, null, response.versionId(), null);
+        return new S3Item(key, null, response.versionId());
     }
 
     @Override

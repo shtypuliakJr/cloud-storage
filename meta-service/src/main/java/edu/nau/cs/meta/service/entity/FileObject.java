@@ -14,16 +14,18 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-//@Entity
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(exclude = {"chunks"})
+@EqualsAndHashCode(exclude = {"chunks", "tag"})
 public class FileObject {
 
     @Id
@@ -34,6 +36,9 @@ public class FileObject {
 
     @Column(name = "original_name", nullable = false)
     private String originalName;
+
+    @Column(name = "object_path", nullable = false)
+    private String objectPath;
 
     @Column(name = "object_type", nullable = false)
     private String objectType;
@@ -54,5 +59,13 @@ public class FileObject {
 
     @OneToMany(mappedBy = "fileObject", fetch = FetchType.LAZY, targetEntity = Chunk.class)
     private Set<Chunk> chunks;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tag_id")
+    private Tag tag;
 
 }
