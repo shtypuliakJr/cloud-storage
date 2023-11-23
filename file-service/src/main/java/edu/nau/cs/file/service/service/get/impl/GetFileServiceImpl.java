@@ -18,7 +18,7 @@ public class GetFileServiceImpl implements GetFileService {
     private String bucket;
 
     @Override
-    public FileObjectDTO getFile(String fileId) {
+    public FileObjectDTO getFile(String userId, String fileId) {
 //        awsS3Service.getObject(, bucket);
         return null;
     }
@@ -29,7 +29,7 @@ public class GetFileServiceImpl implements GetFileService {
     }
 
     @Override
-    public FileObjectDTO getArchivedFiles(List<String> fileIds) {
+    public FileObjectDTO getArchivedFiles(String userId, List<String> fileIds) {
         return null;
     }
 

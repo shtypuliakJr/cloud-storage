@@ -5,9 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,17 +33,20 @@ public class Chunk {
     private String id;
 
     @Column(name = "chunk_order", nullable = false)
-    private Long chunk_order;
+    private Long chunkOrder;
 
     @Column(name = "s3_key", nullable = false)
     private String s3Key;
 
-    @Column(name = "created_at", nullable = false)
-    @CreatedDate
+    @Column(name = "chunk_size", nullable = false)
+    private Long chunkSize;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", nullable = false)
-    @LastModifiedDate
+    @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)

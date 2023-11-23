@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface GetFileChunkService {
 
-    FileChunkDTO getFileChunk(String fileId, String fileChunkId);
+    FileChunkDTO getFileChunk(String userId, String fileId, String fileChunkId);
 
     List<FileChunkDTO> getFileChunks(List<String> fileChunkIds);
 

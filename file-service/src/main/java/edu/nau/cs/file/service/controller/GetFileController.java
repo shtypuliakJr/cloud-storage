@@ -25,7 +25,7 @@ public class GetFileController implements GetFileControllerApi {
 
     @Override
     public ResponseEntity<Resource> downloadFile(String fileId) {
-        FileObjectDTO fileObjectDTO = getFileService.getFile(fileId);
+        FileObjectDTO fileObjectDTO = getFileService.getFile(userId, fileId);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=\"%s\"", fileObjectDTO.getOriginalFileName()))
                 .contentLength(fileObjectDTO.getSize())
@@ -35,7 +35,7 @@ public class GetFileController implements GetFileControllerApi {
 
     @Override
     public ResponseEntity<Resource> downloadFileChunk(String fileId, String chunkId) {
-        FileChunkDTO fileChunkDTO = getFileChunkService.getFileChunk(fileId, chunkId);
+        FileChunkDTO fileChunkDTO = getFileChunkService.getFileChunk(userId, fileId, chunkId);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=\"%s\"", fileChunkDTO.getOriginalFileName() + "-" + fileChunkDTO.getChunkId()))
                 .contentLength(fileChunkDTO.getSize())
@@ -45,7 +45,7 @@ public class GetFileController implements GetFileControllerApi {
 
     @Override
     public ResponseEntity<Resource> downloadFilesZip(List<String> fileIds) {
-        FileObjectDTO fileObjectDTO = getFileService.getArchivedFiles(fileIds);
+        FileObjectDTO fileObjectDTO = getFileService.getArchivedFiles(userId, fileIds);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=\"%s\"", "files.zip"))
                 .contentType(MediaTypeFactory.getMediaType(fileObjectDTO.getOriginalFileName()).orElse(MediaType.APPLICATION_OCTET_STREAM))

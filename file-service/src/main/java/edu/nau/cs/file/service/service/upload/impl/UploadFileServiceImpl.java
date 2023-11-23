@@ -4,8 +4,9 @@ import edu.nau.cs.file.service.dto.FileChunkUploadDTO;
 import edu.nau.cs.file.service.dto.FileUploadDTO;
 import edu.nau.cs.file.service.dto.FileUploadPayload;
 import edu.nau.cs.file.service.dto.S3FileChunkPayload;
+import edu.nau.cs.file.service.dto.transfer.FileChunkDTO;
+import edu.nau.cs.file.service.dto.transfer.FileObjectDTO;
 import edu.nau.cs.file.service.s3.AwsS3Service;
-import edu.nau.cs.file.service.s3.S3Item;
 import edu.nau.cs.file.service.service.chunk.ChunkService;
 import edu.nau.cs.file.service.service.upload.UploadFileService;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -35,11 +36,23 @@ public class UploadFileServiceImpl implements UploadFileService {
         final String fileId = UUID.randomUUID().toString();
         List<S3FileChunkPayload> s3FileChunkPayloads = chunkService.processFile(fileUploadPayload, userId, fileId);
 
-        List<S3Item> s3Items = awsS3Service.uploadObjects(s3FileChunkPayloads, bucket);
+        awsS3Service.uploadObjects(s3FileChunkPayloads, bucket);
 
-        ResponseEntity<String> response = restTemplate.getForEntity(URI.create("http://cs-meta-service:8080/hello/world"), String.class);
-        System.out.println("response body = " + response.getBody());
-        Iterator<S3Item> s3ItemIterator = s3Items.iterator();
+        ResponseEntity<FileObjectDTO> response = restTemplate.postForEntity(URI.create("http://cs-meta-service:8080/cs-api/files"),
+                FileObjectDTO.builder()
+                        .withOriginalName(fileUploadPayload.getOriginalFilename())
+                        .withObjectType(fileUploadPayload.getContentType())
+                        .withIsFolder(false)
+                        .withS3Path(null)
+                        .withChunks(s3FileChunkPayloads.stream().map(s3FileChunkPayload -> FileChunkDTO.builder()
+                                        .chunkOrder(s3FileChunkPayload.getChunkPosition())
+                                        .s3Key(s3FileChunkPayload.getS3Key())
+                                        .chunkSize(s3FileChunkPayload.getSize())
+                                        .build())
+                                .collect(Collectors.toList()))
+                        .withUserId(userId)
+                        .build(),
+                FileObjectDTO.class);
 
         List<FileChunkUploadDTO> fileChunkUploadDTOs = s3FileChunkPayloads.stream()
                 .map(s3FileChunkPayload -> FileChunkUploadDTO.builder()
