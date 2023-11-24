@@ -25,14 +25,14 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public FileObjectDTO getFileData(String userId, String fileId) {
-        return fileObjectRepository.findByUserId(fileId)
+        return fileObjectRepository.findByIdAndUserId(fileId, userId)
                 .map(fileObjectMapper::mapFileObjectToDTO)
                 .orElseThrow(() -> new CsFileObjectDoesNotExistsException(userId, fileId));
     }
 
     @Override
     public List<FileObjectDTO> getFilesData(String userId, List<String> fileIds) {
-        return fileObjectRepository.findAllByUserIdAndIdIn(userId, fileIds).stream()
+        return fileObjectRepository.findAllByIdInAndUserId(fileIds, userId).stream()
                 .map(fileObjectMapper::mapFileObjectToDTO)
                 .toList();
     }

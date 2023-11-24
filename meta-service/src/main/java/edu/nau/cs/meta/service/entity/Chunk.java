@@ -35,11 +35,14 @@ public class Chunk {
     @Column(name = "chunk_order", nullable = false)
     private Long chunkOrder;
 
-    @Column(name = "s3_key", nullable = false)
-    private String s3Key;
-
     @Column(name = "chunk_size", nullable = false)
     private Long chunkSize;
+
+    @Column(name = "chunk_checksum", nullable = false)
+    private Long chunkChecksum;
+
+    @Column(name = "s3_key", nullable = false)
+    private String s3Key;
 
     @CreationTimestamp
     @Column(name = "created_at")

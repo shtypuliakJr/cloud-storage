@@ -26,8 +26,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(setterPrefix = "with")
-@EqualsAndHashCode(exclude = {"user", "tag", "parentFolderObject", "chunks"})
-public class FileObject {
+@EqualsAndHashCode(exclude = {"user", "tag", "parentFolder", "currentFolderChildFolders", "currentFolderChildFiles"})
+public class FolderObject {
 
     @Id
     @Column(name = "id", nullable = false)
@@ -35,17 +35,11 @@ public class FileObject {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    @Column(name = "file_name", nullable = false)
-    private String fileName;
+    @Column(name = "folder_name", nullable = false)
+    private String folderName;
 
-    @Column(name = "object_type", nullable = false)
-    private String objectType;
-
-    @Column(name = "file_path")
-    private String filePath;
-
-    @Column(name = "s3_path", nullable = false)
-    private String s3Path;
+    @Column(name = "folder_path")
+    private String folderPath;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -56,10 +50,6 @@ public class FileObject {
     private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_folder_id")
-    private FolderObject parentFolderObject;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -67,7 +57,13 @@ public class FileObject {
     @JoinColumn(name = "tag_id")
     private Tag tag;
 
-    @OneToMany(mappedBy = "fileObject", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Chunk.class)
-    private List<Chunk> chunks;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private FolderObject parentFolder;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parentFolder", fetch = FetchType.LAZY, targetEntity = FolderObject.class)
+    private List<FolderObject> currentFolderChildFolders;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parentFolderObject", fetch = FetchType.LAZY, targetEntity = FileObject.class)
+    private List<FileObject> currentFolderChildFiles;
 
 }

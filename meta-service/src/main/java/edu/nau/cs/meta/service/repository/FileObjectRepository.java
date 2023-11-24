@@ -10,8 +10,10 @@ import java.util.Optional;
 @Repository
 public interface FileObjectRepository extends JpaRepository<FileObject, String> {
 
-    Optional<FileObject> findByUserId(String userId);
+    List<FileObject> findByUserId(String userId);
 
-    List<FileObject> findAllByUserIdAndIdIn(String userId, List<String> fileIds);
+    Optional<FileObject> findByIdAndUserId(String id, String userId);
+
+    List<FileObject> findAllByIdInAndUserId(List<String> fileIds, String userId);
 
 }

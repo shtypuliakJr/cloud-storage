@@ -43,7 +43,7 @@ public class FileController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteFileData(@RequestBody List<String> fileIds) {
+    public ResponseEntity<Void> deleteFilesData(@RequestBody List<String> fileIds) {
         fileService.deleteFilesData(userId, fileIds);
         return ResponseEntity.noContent().build();
     }

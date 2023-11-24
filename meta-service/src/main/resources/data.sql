@@ -1,0 +1,2 @@
+INSERT INTO users (id, user_name, user_email, user_password, last_login_at, created_at, updated_at)
+VALUES('2bb8e3d3-77fc-46c2-9ddc-8e83d593142d', 'shtepa', 'shtepa@gmail.com', 'shtepa_password', NULL, '2023-11-24 00:45:35.799', '2023-11-24 00:45:35.799');

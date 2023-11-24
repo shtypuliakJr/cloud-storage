@@ -9,13 +9,14 @@ public class ChunkMapper {
 
     public FileChunkDTO mapChunkToDTO(Chunk chunk) {
         return FileChunkDTO.builder()
-                .chunkId(chunk.getId())
-                .fileId(chunk.getFileObject().getId())
-                .chunkOrder(chunk.getChunkOrder())
-                .s3Key(chunk.getS3Key())
-                .chunkSize(chunk.getChunkSize())
-                .createdAt(chunk.getCreatedAt())
-                .updatedAt(chunk.getUpdatedAt())
+                .withChunkId(chunk.getId())
+                .withChunkOrder(chunk.getChunkOrder())
+                .withChunkSize(chunk.getChunkSize())
+                .withChunkChecksum(chunk.getChunkChecksum())
+                .withS3Key(chunk.getS3Key())
+                .withCreatedAt(chunk.getCreatedAt())
+                .withUpdatedAt(chunk.getUpdatedAt())
+                .withFileObjectId(chunk.getFileObject().getId())
                 .build();
     }
 
@@ -23,8 +24,9 @@ public class ChunkMapper {
         return Chunk.builder()
                 .id(fileChunkDTO.getChunkId())
                 .chunkOrder(fileChunkDTO.getChunkOrder())
-                .s3Key(fileChunkDTO.getS3Key())
                 .chunkSize(fileChunkDTO.getChunkSize())
+                .chunkChecksum(fileChunkDTO.getChunkChecksum())
+                .s3Key(fileChunkDTO.getS3Key())
                 .createdAt(fileChunkDTO.getCreatedAt())
                 .updatedAt(fileChunkDTO.getUpdatedAt())
                 .build();

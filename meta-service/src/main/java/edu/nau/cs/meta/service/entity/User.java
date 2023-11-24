@@ -17,7 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
@@ -34,14 +34,14 @@ public class User {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "user_name", nullable = false)
+    private String userName;
 
-    @Column(name = "email", nullable = false)
-    private String email;
+    @Column(name = "user_email", nullable = false)
+    private String userEmail;
 
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "user_password", nullable = false)
+    private String userPassword;
 
     @Column(name = "last_login_at")
     private LocalDateTime lastLoginAt;
@@ -55,9 +55,12 @@ public class User {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, targetEntity = Device.class)
-    private Set<Device> devices;
+    private List<Device> devices;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, targetEntity = FileObject.class)
-    private Set<FileObject> fileObjects;
+    private List<FileObject> fileObjects;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, targetEntity = FolderObject.class)
+    private List<FolderObject> folderObjects;
 
 }
