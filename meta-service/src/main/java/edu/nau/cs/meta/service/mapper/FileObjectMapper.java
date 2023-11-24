@@ -21,10 +21,9 @@ public class FileObjectMapper {
                 .map(chunkMapper::mapChunkToDTO)
                 .toList();
         return FileObjectDTO.builder()
-                .withId(fileObject.getId())
-                .withOriginalName(fileObject.getOriginalName())
-                .withObjectType(fileObject.getObjectType())
-                .withIsFolder(fileObject.getIsFolder())
+                .withFileObjectId(fileObject.getId())
+                .withFileName(fileObject.getFileName())
+                .withFileType(fileObject.getObjectType())
                 .withS3Path(fileObject.getS3Path())
                 .withCreatedAt(fileObject.getCreatedAt())
                 .withUpdatedAt(fileObject.getUpdatedAt())
@@ -38,11 +37,13 @@ public class FileObjectMapper {
 
     public FileObject mapFileObjectToEntity(FileObjectDTO fileObjectDTO) {
         return FileObject.builder()
-                .withId(fileObjectDTO.getId())
-                .withOriginalName(fileObjectDTO.getOriginalName())
-                .withObjectType(fileObjectDTO.getObjectType())
-                .withIsFolder(fileObjectDTO.getIsFolder())
+                .withId(fileObjectDTO.getFileObjectId())
+                .withFileName(fileObjectDTO.getFileName())
+                .withObjectType(fileObjectDTO.getFileType())
+                .withFilePath(fileObjectDTO.getFilePath())
                 .withS3Path(fileObjectDTO.getS3Path())
+                .withCreatedAt(fileObjectDTO.getCreatedAt())
+                .withUpdatedAt(fileObjectDTO.getUpdatedAt())
                 .build();
     }
 

@@ -32,7 +32,7 @@ public class Tag {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    @Column(name = "original_name", nullable = false)
+    @Column(name = "tag_name", nullable = false)
     private String tagName;
 
     @Column(name = "description", nullable = false)

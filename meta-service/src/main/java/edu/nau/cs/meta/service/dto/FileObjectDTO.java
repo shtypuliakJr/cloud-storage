@@ -15,13 +15,15 @@ public class FileObjectDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 3606020079001136077L;
 
-    private String id;
+    private String fileObjectId;
 
-    private String originalName;
+    private String fileName;
 
-    private String objectType;
+    private Long size;
 
-    private Boolean isFolder;
+    private String fileType;
+
+    private String filePath;
 
     private String s3Path;
 
@@ -29,9 +31,9 @@ public class FileObjectDTO implements Serializable {
 
     private LocalDateTime updatedAt;
 
-    private List<FileChunkDTO> chunks;
+    private LocalDateTime parentFolderId;
 
-    private Long size;
+    private List<FileChunkDTO> chunks;
 
     private String userId;
 

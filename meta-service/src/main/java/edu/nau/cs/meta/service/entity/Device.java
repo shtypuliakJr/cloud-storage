@@ -32,8 +32,8 @@ public class Device {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "device_name", nullable = false)
+    private String deviceName;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
