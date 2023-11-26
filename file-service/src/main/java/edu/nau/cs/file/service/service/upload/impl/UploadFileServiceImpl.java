@@ -40,14 +40,13 @@ public class UploadFileServiceImpl implements UploadFileService {
 
         ResponseEntity<FileObjectDTO> response = restTemplate.postForEntity(URI.create("http://cs-meta-service:8080/cs-api/files"),
                 FileObjectDTO.builder()
-                        .withOriginalName(fileUploadPayload.getOriginalFilename())
-                        .withObjectType(fileUploadPayload.getContentType())
-                        .withIsFolder(false)
+                        .withFileName(fileUploadPayload.getOriginalFilename())
+                        .withFileType(fileUploadPayload.getContentType())
                         .withS3Path(null)
                         .withChunks(s3FileChunkPayloads.stream().map(s3FileChunkPayload -> FileChunkDTO.builder()
-                                        .chunkOrder(s3FileChunkPayload.getChunkPosition())
-                                        .s3Key(s3FileChunkPayload.getS3Key())
-                                        .chunkSize(s3FileChunkPayload.getSize())
+                                        .withChunkOrder(s3FileChunkPayload.getChunkOrder())
+                                        .withS3Key(s3FileChunkPayload.getS3Key())
+                                        .withChunkSize(s3FileChunkPayload.getSize())
                                         .build())
                                 .collect(Collectors.toList()))
                         .withUserId(userId)
@@ -58,7 +57,7 @@ public class UploadFileServiceImpl implements UploadFileService {
                 .map(s3FileChunkPayload -> FileChunkUploadDTO.builder()
                         .withChunkId(s3FileChunkPayload.getChunkId())
                         .withChunkObjectKey(s3FileChunkPayload.getS3Key())
-                        .withChunkPosition(s3FileChunkPayload.getChunkPosition())
+                        .withChunkPosition(s3FileChunkPayload.getChunkOrder())
                         .withChecksumCRC32(s3FileChunkPayload.getCheckSum())
                         .build())
                 .toList();

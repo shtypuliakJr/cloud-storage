@@ -321,3 +321,15 @@ paths:
                 items:
                   type: object
                   $ref: FileChunkDeleteDTO
+  /cs-api/hello-world:
+    get:
+      tags:
+        - test-gateway-controller
+      operationId: getHelloWorld
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string

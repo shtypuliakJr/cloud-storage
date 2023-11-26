@@ -47,7 +47,7 @@ public class ChunkServiceImpl implements ChunkService {
             String chunkId = UUID.randomUUID().toString();
             s3FileChunkPayloads.add(S3FileChunkPayload.builder()
                     .chunkId(chunkId)
-                    .chunkPosition(chunkPosition++)
+                    .chunkOrder(chunkPosition++)
                     .s3Key(S3KeyPathResolver.toChunkPath(userId, fileId, chunkId))
                     .size(currentChunk.length)
                     .body(new ByteArrayInputStream(currentChunk))

@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.RequestContext;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class GetFileController implements GetFileControllerApi {
 
     private final GetFileService getFileService;
     private final GetFileChunkService getFileChunkService;
-    private final String userId = "shtepa";
+    private final String userId = "2bb8e3d3-77fc-46c2-9ddc-8e83d593142d";
 
     @Override
     public ResponseEntity<Resource> downloadFile(String fileId) {

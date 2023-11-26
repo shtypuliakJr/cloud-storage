@@ -16,6 +16,7 @@ public class DeleteFileController implements DeleteFileControllerApi {
 
     private final DeleteFileService deleteFileService;
     private final DeleteFileChunkService deleteFileChunkService;
+    private final String userId = "2bb8e3d3-77fc-46c2-9ddc-8e83d593142d";
 
     @Override
     public ResponseEntity<FileObjectDeleteDTO> deleteFile(String fileId) {

@@ -19,7 +19,7 @@ public class UploadFileController implements UploadFileControllerApi {
 
     private final UploadFileService uploadFileService;
     private final UploadFileChunkService uploadFileChunkService;
-    private final String userId = "47849358-1ab4-4629-bcfb-2411d828d787";
+    private final String userId = "2bb8e3d3-77fc-46c2-9ddc-8e83d593142d";
 
     @Override
     public ResponseEntity<FileUploadDTO> uploadFile(MultipartFile file, String path, String folderParentId) {

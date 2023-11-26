@@ -10,33 +10,29 @@ import java.util.List;
 
 @Data
 @Builder(setterPrefix = "with")
-public class FileObjectDTO implements Serializable {
+public class FolderObjectDTO implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 3606020079001136077L;
+    private static final long serialVersionUID = 7235437695874712161L;
 
-    private String fileObjectId;
+    private String folderObjectId;
 
-    private String fileName;
+    private String folderName;
 
-    private Long size;
-
-    private String fileType;
-
-    private String filePath;
-
-    private String s3Path;
+    private String folderPath;
 
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 
-    private LocalDateTime parentFolderId;
-
-    private List<FileChunkDTO> chunks;
-
     private String userId;
 
     private String tag;
+
+    private String parentFolderId;
+
+    private List<FolderObjectDTO> currentFolderChildFolders;
+
+    private List<FileObjectDTO> currentFolderChildFiles;
 
 }

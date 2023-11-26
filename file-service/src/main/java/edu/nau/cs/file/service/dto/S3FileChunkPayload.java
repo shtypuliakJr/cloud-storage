@@ -13,7 +13,7 @@ public class S3FileChunkPayload {
 
     private String s3Key;
 
-    private long chunkPosition;
+    private long chunkOrder;
 
     private long size;
 

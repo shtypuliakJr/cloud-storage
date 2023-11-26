@@ -1,0 +1,28 @@
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: file-service-route
+#          uri: ${FILE_SERVICE_ROUTE_URI:http://localhost:8010}
+#          predicates:
+#            - Path=/file-service/**
+#          filters:
+#            - PrefixPath=/cs-api
+#            - AddResponseHeader=X-Powered-By, Cloud storage Gateway Service
+#        - id: meta-service-route
+#          uri: ${META_SERVICE_ROUTE_URI:http://localhost:8011}
+#          predicates:
+#            - Path=/meta-service/**
+#          filters:
+#            - PrefixPath=/cs-api
+#            - AddResponseHeader=X-Powered-By, Cloud storage Gateway Service
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      enabled: true
