@@ -22,7 +22,7 @@ public class FileController {
     private final String userId = "40231bd7-f047-4577-b8e8-028b263008c1";
 
     @GetMapping("/cs-api/files/{fileId}")
-    public ResponseEntity<FileObjectDTO> getFileData(@PathVariable("fileId") String fileId) {
+    public ResponseEntity<FileObjectDTO> getFileData(@PathVariable String fileId) {
         return ResponseEntity.ok(fileService.getFileData(userId, fileId));
     }
 
@@ -32,12 +32,12 @@ public class FileController {
     }
 
     @PutMapping("/cs-api/files/{fileId}")
-    public ResponseEntity<FileObjectDTO> editFileData(@PathVariable("fileId") String fileId, @RequestBody FileObjectDTO fileObjectDTO) {
+    public ResponseEntity<FileObjectDTO> editFileData(@PathVariable String fileId, @RequestBody FileObjectDTO fileObjectDTO) {
         return ResponseEntity.ok(fileService.editFileData(userId, fileId, fileObjectDTO));
     }
 
     @DeleteMapping("/cs-api/files/{fileId}")
-    public ResponseEntity<Void> deleteFileData(@PathVariable("fileId") String fileId) {
+    public ResponseEntity<Void> deleteFileData(@PathVariable String fileId) {
         fileService.deleteFileData(userId, fileId);
         return ResponseEntity.noContent().build();
     }

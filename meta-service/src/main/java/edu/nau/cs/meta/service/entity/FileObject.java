@@ -31,8 +31,6 @@ public class FileObject {
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
     @Column(name = "file_name", nullable = false)

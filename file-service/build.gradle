@@ -62,10 +62,12 @@ openApiGenerate {
             "ErrorDTO"               : "edu.nau.cs.file.service.dto.ErrorDTO",
             "DeleteObjectResponseDTO": "edu.nau.cs.file.service.dto.DeleteObjectResponseDTO",
             "DeleteChunkResponseDTO" : "edu.nau.cs.file.service.dto.DeleteChunkResponseDTO",
-            "FileUploadDTO"          : "edu.nau.cs.file.service.dto.FileUploadDTO",
             "FileChunkUploadDTO"     : "edu.nau.cs.file.service.dto.FileChunkUploadDTO",
             "FileChunkDeleteDTO"     : "edu.nau.cs.file.service.dto.FileChunkDeleteDTO",
             "FileObjectDeleteDTO"    : "edu.nau.cs.file.service.dto.FileObjectDeleteDTO",
+            "FileChunkDTO"           : "edu.nau.cs.file.service.dto.transfer.FileChunkDTO",
+            "FileObjectDTO"          : "edu.nau.cs.file.service.dto.transfer.FileObjectDTO",
+            "FolderObjectDTO"        : "edu.nau.cs.file.service.dto.transfer.FolderObjectDTO"
     ]
 }
 

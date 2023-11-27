@@ -28,8 +28,9 @@ public class ChunkServiceImpl implements ChunkService {
             String chunkId = UUID.randomUUID().toString();
             return Collections.singletonList(S3FileChunkPayload.builder()
                     .chunkId(chunkId)
+                    .chunkOrder(0)
                     .s3Key(S3KeyPathResolver.toChunkPath(userId, fileId, chunkId))
-                    .size(fileSize)
+                    .chunkSize(fileSize)
                     .body(fileUploadPayload.getBody())
                     .build());
         }
@@ -49,7 +50,7 @@ public class ChunkServiceImpl implements ChunkService {
                     .chunkId(chunkId)
                     .chunkOrder(chunkPosition++)
                     .s3Key(S3KeyPathResolver.toChunkPath(userId, fileId, chunkId))
-                    .size(currentChunk.length)
+                    .chunkSize((long) currentChunk.length)
                     .body(new ByteArrayInputStream(currentChunk))
                     .checksum(ChecksumUtil.getCRC32Checksum(currentChunk))
                     .build());
@@ -65,8 +66,9 @@ public class ChunkServiceImpl implements ChunkService {
             String chunkId = UUID.randomUUID().toString();
             return Collections.singletonList(S3FileChunkPayload.builder()
                     .chunkId(chunkId)
+                    .chunkOrder(0)
                     .s3Key(S3KeyPathResolver.toChunkPath(filePath, chunkId))
-                    .size(fileSize)
+                    .chunkSize(fileSize)
                     .body(fileUploadPayload.getBody())
                     .build());
         }
@@ -86,7 +88,7 @@ public class ChunkServiceImpl implements ChunkService {
                     .chunkId(chunkId)
                     .chunkOrder(chunkPosition++)
                     .s3Key(S3KeyPathResolver.toChunkPath(filePath, chunkId))
-                    .size(currentChunk.length)
+                    .chunkSize((long) currentChunk.length)
                     .body(new ByteArrayInputStream(currentChunk))
                     .checksum(ChecksumUtil.getCRC32Checksum(currentChunk))
                     .build());

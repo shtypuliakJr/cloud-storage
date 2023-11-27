@@ -22,6 +22,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @RequiredArgsConstructor
@@ -53,8 +54,9 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         PutObjectResponse response = s3Client.putObject(request -> request
                         .key(fileUploadPayload.getS3Key())
                         .bucket(bucket)
-                        .contentLength(fileUploadPayload.getSize()),
-                RequestBody.fromInputStream(fileUploadPayload.getBody(), fileUploadPayload.getSize()));
+                        .contentLength(fileUploadPayload.getChunkSize())
+                        .metadata(Map.of("x-amz-meta-chunk-order", String.valueOf(fileUploadPayload.getChunkOrder()))),
+                RequestBody.fromInputStream(fileUploadPayload.getBody(), fileUploadPayload.getChunkSize()));
         return new S3Item(fileUploadPayload.getS3Key(), response.eTag(), response.versionId());
     }
 

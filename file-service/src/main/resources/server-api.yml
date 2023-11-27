@@ -51,7 +51,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: FileUploadDTO
+                $ref: FileObjectDTO
   /cs-api/files/{fileId}/chunks:
     get:
       tags:
@@ -112,7 +112,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: FileChunkUploadDTO
+                $ref: FileChunkDTO
   /cs-api/files/{fileId}:
     get:
       tags:
@@ -183,7 +183,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: FileUploadDTO
+                  $ref: FileObjectDTO
     delete:
       tags:
         - delete-file-controller
@@ -292,7 +292,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: FileChunkUploadDTO
+                  $ref: FileChunkDTO
     delete:
       tags:
         - delete-file-controller

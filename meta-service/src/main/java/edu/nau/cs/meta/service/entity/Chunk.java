@@ -27,9 +27,7 @@ import java.time.LocalDateTime;
 public class Chunk {
 
     @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "id", updatable = false, nullable = false)
     private String id;
 
     @Column(name = "chunk_order", nullable = false)
