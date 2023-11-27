@@ -1,7 +1,9 @@
 package edu.nau.cs.file.service.dto.transfer;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -9,6 +11,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder(setterPrefix = "with")
 public class FileObjectDTO implements Serializable {
 
@@ -31,7 +35,7 @@ public class FileObjectDTO implements Serializable {
 
     private LocalDateTime updatedAt;
 
-    private LocalDateTime parentFolderId;
+    private String parentFolderId;
 
     private List<FileChunkDTO> chunks;
 

@@ -8,7 +8,14 @@ public final class S3KeyPathResolver {
     private static final String KEY_SEPARATOR = "/";
     private static final String S3_PATH_TEMPLATE = "{userLeftPartition}/{userRightPartition}/{userId}/{fileId}";
 
-    public static String toFilePath(String filePath, String chunkId) {
+    public static String toFilePath(String userId, String fileId) {
+
+        final Integer userLeftPartition = Math.abs(userId.hashCode() % 1000 / 10);
+        final Integer userRightPartition = Math.abs(userId.hashCode() % 10);
+        return toFilePath(userLeftPartition, userRightPartition, userId, fileId);
+    }
+
+    public static String toChunkPath(String filePath, String chunkId) {
         return filePath + KEY_SEPARATOR + chunkId;
     }
 

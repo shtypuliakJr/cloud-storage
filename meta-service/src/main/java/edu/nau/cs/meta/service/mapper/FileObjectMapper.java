@@ -29,6 +29,7 @@ public class FileObjectMapper {
                 .withUpdatedAt(fileObject.getUpdatedAt())
                 .withChunks(fileChunkDTOs)
                 .withSize(fileChunkDTOs.stream().map(FileChunkDTO::getChunkSize).reduce(Long::sum).orElse(null))
+                .withParentFolderId(fileObject.getParentFolderObject().getId())
                 .withUserId(fileObject.getUser().getId())
                 .withTag(Optional.ofNullable(fileObject.getTag()).map(Tag::getTagName).orElse(null))
                 .build();

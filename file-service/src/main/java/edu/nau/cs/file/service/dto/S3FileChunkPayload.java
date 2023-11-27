@@ -19,6 +19,6 @@ public class S3FileChunkPayload {
 
     private InputStream body;
 
-    private Long checkSum;
+    private Long checksum;
 
 }

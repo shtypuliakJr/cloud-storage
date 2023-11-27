@@ -31,7 +31,7 @@ public class FileObjectDTO implements Serializable {
 
     private LocalDateTime updatedAt;
 
-    private LocalDateTime parentFolderId;
+    private String parentFolderId;
 
     private List<FileChunkDTO> chunks;
 

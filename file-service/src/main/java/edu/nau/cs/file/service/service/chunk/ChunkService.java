@@ -9,4 +9,6 @@ public interface ChunkService {
 
     List<S3FileChunkPayload> processFile(FileUploadPayload fileUploadPayload, String userId, String fileId);
 
+    List<S3FileChunkPayload> processFile(FileUploadPayload fileUploadPayload, String filePath);
+
 }

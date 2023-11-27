@@ -12,7 +12,7 @@ services:
       - db-cloud-storage
       - cloud-storage-minio
     ports:
-      - "8010:8080"
+      - "8010:80"
       - "6001:6001"
     environment:
       AWS_ACCESS_KEY_ID: dummy_key
@@ -34,7 +34,7 @@ services:
       - cloud-storage-minio
     hostname: cs-meta-service
     ports:
-      - "8011:8080"
+      - "8011:80"
       - "6002:6001"
     environment:
       ENV_VAR_NAME: ${COMPOSE_PROJECT_NAME}
