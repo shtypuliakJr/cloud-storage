@@ -1,18 +1,9 @@
--- DROP TABLE tag;
--- DROP TABLE users;
--- DROP TABLE device;
--- DROP TABLE folder_object;
--- DROP TABLE file_object;
--- DROP TABLE chunk;
-
-CREATE TABLE tag (
-  id VARCHAR(255) NOT NULL,
-  tag_name VARCHAR(255) NOT NULL,
-  description VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP NOT NULL,
-  updated_at TIMESTAMP NOT NULL,
-  CONSTRAINT tag_pkey PRIMARY KEY (id)
-);
+--DROP TABLE device;
+--DROP TABLE chunk;
+--DROP TABLE file_object;
+--DROP TABLE folder_object;
+--DROP TABLE tag;
+--DROP TABLE users;
 
 CREATE TABLE users (
   id VARCHAR(255) NOT NULL,
@@ -22,7 +13,18 @@ CREATE TABLE users (
   last_login_at TIMESTAMP NULL,
   created_at TIMESTAMP NULL,
   updated_at TIMESTAMP NULL,
-  CONSTRAINT users_pkey PRIMARY KEY (id)
+CONSTRAINT users_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE tag (
+  id VARCHAR(255) NOT NULL,
+  tag_name VARCHAR(255) NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP NOT NULL,
+  updated_at TIMESTAMP NOT NULL,
+  user_id VARCHAR(255) NOT NULL,
+  CONSTRAINT tag_pkey PRIMARY KEY (id),
+  CONSTRAINT tag_user_fkey FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE device (

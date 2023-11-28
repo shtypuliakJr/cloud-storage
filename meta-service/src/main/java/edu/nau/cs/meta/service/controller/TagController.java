@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TagController {
 
-    public ResponseEntity<Void> getObjectTags() {
+    public ResponseEntity<Void> getObjectTag() {
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> addObjectTags() {
+    public ResponseEntity<Void> addObjectTag() {
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> editFolderTags() {
+    public ResponseEntity<Void> editObjectTag() {
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> deleteFolderTags() {
+    public ResponseEntity<Void> deleteObjectTags() {
         return ResponseEntity.ok().build();
     }
 

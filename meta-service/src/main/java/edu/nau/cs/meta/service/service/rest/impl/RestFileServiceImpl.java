@@ -6,7 +6,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static edu.nau.cs.meta.service.constants.Endpoint.BASE_END_POINT;
+import static edu.nau.cs.meta.service.constants.Endpoint.BASE_ENDPOINT;
 import static edu.nau.cs.meta.service.constants.Endpoint.FILES;
 
 @Service
@@ -17,7 +17,7 @@ public class RestFileServiceImpl implements RestFileService {
 
     @Override
     public FileObjectDTO saveFileObject(@NonNull FileObjectDTO fileObjectDTO) {
-        return restTemplate.postForEntity(BASE_END_POINT + FILES, fileObjectDTO, FileObjectDTO.class);
+        return restTemplate.postForEntity(BASE_ENDPOINT + FILES, fileObjectDTO, FileObjectDTO.class);
     }
 
 }

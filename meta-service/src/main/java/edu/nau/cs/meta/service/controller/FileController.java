@@ -10,40 +10,46 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static edu.nau.cs.meta.service.constants.Endpoint.BASE_ENDPOINT;
+import static edu.nau.cs.meta.service.constants.Endpoint.FILES;
+
 @RequiredArgsConstructor
 @RestController
+@RequestMapping(BASE_ENDPOINT + FILES)
 public class FileController {
 
     private final FileService fileService;
     private final String userId = "40231bd7-f047-4577-b8e8-028b263008c1";
 
-    @GetMapping("/cs-api/files/{fileId}")
+    @GetMapping("/{fileId}")
     public ResponseEntity<FileObjectDTO> getFileData(@PathVariable String fileId) {
         return ResponseEntity.ok(fileService.getFileData(userId, fileId));
     }
 
-    @PostMapping("/cs-api/files")
+    @PostMapping
     public ResponseEntity<FileObjectDTO> saveFileData(@RequestBody FileObjectDTO fileObjectDTO) {
         return ResponseEntity.ok(fileService.saveFileData(fileObjectDTO.getUserId(), fileObjectDTO));
     }
 
-    @PutMapping("/cs-api/files/{fileId}")
+    @PutMapping("/{fileId}")
     public ResponseEntity<FileObjectDTO> editFileData(@PathVariable String fileId, @RequestBody FileObjectDTO fileObjectDTO) {
         return ResponseEntity.ok(fileService.editFileData(userId, fileId, fileObjectDTO));
     }
 
-    @DeleteMapping("/cs-api/files/{fileId}")
+    @DeleteMapping("/{fileId}")
     public ResponseEntity<Void> deleteFileData(@PathVariable String fileId) {
         fileService.deleteFileData(userId, fileId);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteFilesData(@RequestBody List<String> fileIds) {
+    public ResponseEntity<Void> deleteFilesData(@RequestParam List<String> fileIds) {
         fileService.deleteFilesData(userId, fileIds);
         return ResponseEntity.noContent().build();
     }

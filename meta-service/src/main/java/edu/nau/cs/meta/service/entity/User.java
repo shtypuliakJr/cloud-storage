@@ -24,7 +24,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(exclude = {"devices", "fileObjects"})
+@EqualsAndHashCode(exclude = {"devices", "fileObjects", "folderObjects", "tags"})
 @Table(name = "users")
 public class User {
 
@@ -62,5 +62,8 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, targetEntity = FolderObject.class)
     private List<FolderObject> folderObjects;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, targetEntity = FolderObject.class)
+    private List<Tag> tags;
 
 }

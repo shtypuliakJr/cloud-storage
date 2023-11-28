@@ -58,6 +58,7 @@ public class FolderObject {
     private Tag tag;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_folder_id")
     private FolderObject parentFolder;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "parentFolder", fetch = FetchType.LAZY, targetEntity = FolderObject.class)
