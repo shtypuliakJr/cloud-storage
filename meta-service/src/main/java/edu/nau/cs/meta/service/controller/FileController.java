@@ -18,6 +18,7 @@ import java.util.List;
 
 import static edu.nau.cs.meta.service.constants.Endpoint.BASE_ENDPOINT;
 import static edu.nau.cs.meta.service.constants.Endpoint.FILES;
+import static edu.nau.cs.meta.service.constants.TemporaryConstants.USER_ID;
 
 @RequiredArgsConstructor
 @RestController
@@ -25,7 +26,7 @@ import static edu.nau.cs.meta.service.constants.Endpoint.FILES;
 public class FileController {
 
     private final FileService fileService;
-    private final String userId = "40231bd7-f047-4577-b8e8-028b263008c1";
+    private final String userId = USER_ID;
 
     @GetMapping("/{fileId}")
     public ResponseEntity<FileObjectDTO> getFileData(@PathVariable String fileId) {

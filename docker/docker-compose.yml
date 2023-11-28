@@ -68,8 +68,8 @@ services:
     volumes:
       - ./minio/s3:/data
     ports:
-      - "9000:9000"
-      - "9001:9001"
+      - "9002:9000"
+      - "9003:9001"
     entrypoint: sh
     command: -c 'mkdir -p /data/cs-dev && minio server /data --console-address ":9001"'
     environment:

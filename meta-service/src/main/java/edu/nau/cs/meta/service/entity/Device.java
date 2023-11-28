@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(setterPrefix = "with")
 @EqualsAndHashCode(exclude = {"user"})
 public class Device {
 
