@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Log4j2
@@ -22,6 +23,22 @@ public class AbstractRestTemplateDecorator implements RestTemplateDecorator {
     private final RestTemplate restTemplate;
     private final String schema;
     private final String host;
+
+    @Override
+    public <T> T getForEntity(String path, Class<T> responseType) {
+        ResponseEntity<T> response;
+        try {
+            response = restTemplate.getForEntity(getURI(path), responseType);
+        } catch (HttpClientErrorException ex) {
+            log.error("Bad client response - {}", ex.getMessage());
+            throw new RestException(ex.getMessage());
+        } catch (Exception e) {
+            log.error("Bad response", e);
+            throw new RestException(e.getMessage());
+        }
+        checkHttpStatus(response, path, RequestMethod.GET);
+        return response.getBody();
+    }
 
     @Override
     public <T> T postForEntity(String path, Object request, Class<T> responseType) {
@@ -40,10 +57,9 @@ public class AbstractRestTemplateDecorator implements RestTemplateDecorator {
     }
 
     @Override
-    public <T> T getForEntity(String path, Class<T> responseType) {
-        ResponseEntity<T> response;
+    public void deleteForEntity(String path) {
         try {
-            response = restTemplate.getForEntity(getURI(path), responseType);
+            restTemplate.delete(getURI(path));
         } catch (HttpClientErrorException ex) {
             log.error("Bad client response - {}", ex.getMessage());
             throw new RestException(ex.getMessage());
@@ -51,8 +67,19 @@ public class AbstractRestTemplateDecorator implements RestTemplateDecorator {
             log.error("Bad response", e);
             throw new RestException(e.getMessage());
         }
-        checkHttpStatus(response, path, RequestMethod.GET);
-        return response.getBody();
+    }
+
+    @Override
+    public void deleteForEntities(String path, Map<String, ?> queryParams) {
+        try {
+            restTemplate.delete(getURI(path).toURL().toString(), queryParams);
+        } catch (HttpClientErrorException ex) {
+            log.error("Bad client response - {}", ex.getMessage());
+            throw new RestException(ex.getMessage());
+        } catch (Exception e) {
+            log.error("Bad response", e);
+            throw new RestException(e.getMessage());
+        }
     }
 
     private URI getURI(String path) {

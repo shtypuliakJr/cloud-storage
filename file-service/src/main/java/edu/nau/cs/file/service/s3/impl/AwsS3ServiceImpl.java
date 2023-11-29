@@ -6,6 +6,7 @@ import edu.nau.cs.file.service.s3.AwsS3ErrorCode;
 import edu.nau.cs.file.service.s3.AwsS3Service;
 import edu.nau.cs.file.service.s3.S3Item;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.core.ResponseBytes;
@@ -22,7 +23,6 @@ import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 @RequiredArgsConstructor
@@ -49,14 +49,14 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         }
     }
 
+    @SneakyThrows
     @Override
     public S3Item uploadObject(S3FileChunkPayload fileUploadPayload, String bucket) {
         PutObjectResponse response = s3Client.putObject(request -> request
                         .key(fileUploadPayload.getS3Key())
-                        .bucket(bucket)
                         .contentLength(fileUploadPayload.getChunkSize())
-                        .metadata(Map.of("x-amz-meta-chunk-order", String.valueOf(fileUploadPayload.getChunkOrder()))),
-                RequestBody.fromInputStream(fileUploadPayload.getBody(), fileUploadPayload.getChunkSize()));
+                        .bucket(bucket),
+                RequestBody.fromBytes(fileUploadPayload.getBody().readAllBytes()));
         return new S3Item(fileUploadPayload.getS3Key(), response.eTag(), response.versionId());
     }
 

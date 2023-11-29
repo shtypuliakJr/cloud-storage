@@ -62,16 +62,6 @@ public class ChunkServiceImpl implements ChunkService {
     @Override
     public List<S3FileChunkPayload> processFile(FileUploadPayload fileUploadPayload, String filePath) {
         final long fileSize = fileUploadPayload.getSize();
-        if (fileSize <= CHUNK_SIZE) {
-            String chunkId = UUID.randomUUID().toString();
-            return Collections.singletonList(S3FileChunkPayload.builder()
-                    .chunkId(chunkId)
-                    .chunkOrder(0)
-                    .s3Key(S3KeyPathResolver.toChunkPath(filePath, chunkId))
-                    .chunkSize(fileSize)
-                    .body(fileUploadPayload.getBody())
-                    .build());
-        }
 
         byte[] body = fileUploadPayload.getBody().readAllBytes();
 

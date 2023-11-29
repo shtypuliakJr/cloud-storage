@@ -6,7 +6,7 @@ import edu.nau.cs.file.service.dto.transfer.FileObjectDTO;
 import edu.nau.cs.file.service.mapper.ChunkObjectDTOMapper;
 import edu.nau.cs.file.service.s3.AwsS3Service;
 import edu.nau.cs.file.service.service.chunk.ChunkService;
-import edu.nau.cs.file.service.service.rest.RestMetaService;
+import edu.nau.cs.file.service.service.rest.RestFileMetaService;
 import edu.nau.cs.file.service.service.upload.UploadFileService;
 import edu.nau.cs.file.service.util.S3KeyPathResolver;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     private final AwsS3Service awsS3Service;
     private final ChunkService chunkService;
-    private final RestMetaService restMetaService;
+    private final RestFileMetaService restMetaService;
 
     private final ChunkObjectDTOMapper chunkObjectDTOMapper;
 
