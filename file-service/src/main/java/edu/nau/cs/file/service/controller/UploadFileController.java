@@ -13,13 +13,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+import static edu.nau.cs.file.service.constants.TemporaryConstants.USER_ID;
+
 @RequiredArgsConstructor
 @RestController
 public class UploadFileController implements UploadFileControllerApi {
 
     private final UploadFileService uploadFileService;
     private final UploadFileChunkService uploadFileChunkService;
-    private final String userId = "2bb8e3d3-77fc-46c2-9ddc-8e83d593142d";
+    private final String userId = USER_ID;
 
     @Override
     public ResponseEntity<FileObjectDTO> uploadFile(MultipartFile file, String path, String folderParentId) {

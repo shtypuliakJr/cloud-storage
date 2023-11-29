@@ -15,13 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static edu.nau.cs.file.service.constants.TemporaryConstants.USER_ID;
+
 @RequiredArgsConstructor
 @RestController
 public class GetFileController implements GetFileControllerApi {
 
     private final GetFileService getFileService;
     private final GetFileChunkService getFileChunkService;
-    private final String userId = "2bb8e3d3-77fc-46c2-9ddc-8e83d593142d";
+    private final String userId = USER_ID;
 
     @Override
     public ResponseEntity<Resource> downloadFile(String fileId) {
