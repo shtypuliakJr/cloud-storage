@@ -9,13 +9,15 @@ import edu.nau.cs.file.service.service.rest.RestFileMetaService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.util.Comparator;
 import java.util.List;
@@ -51,29 +53,26 @@ public class GetFileServiceImpl implements GetFileService {
 
     @SneakyThrows
     @Override
-    public FileGetResponseDTO getArchivedFiles(String userId, List<String> fileIds) {
-        FileGetResponseDTO archivedFilesGetResponseDTO = new FileGetResponseDTO();
-        try (ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream("files.zip"))) {
-            for (String fileId : fileIds) {
-                FileGetResponseDTO fileGetResponseDTO = this.getFile(userId, fileId);
-                InputStream inputStreamResource = fileGetResponseDTO.getBody();
+    public StreamingResponseBody getArchivedFiles(String userId, List<String> fileIds, OutputStream outputStream) {
+        return responseOutputStream -> {
+            try (ZipOutputStream zipOutputStream = new ZipOutputStream(outputStream)) {
+                for (String fileId : fileIds) {
+                    FileGetResponseDTO fileGetResponseDTO = this.getFile(userId, fileId);
+                    Resource inputStreamResource = new InputStreamResource(fileGetResponseDTO.getBody());
 
-                ZipEntry zipEntry = new ZipEntry(fileGetResponseDTO.getFileName());
-                zipEntry.setSize(fileGetResponseDTO.getSize());
-                zipEntry.setTime(System.currentTimeMillis());
-                zipOutputStream.putNextEntry(zipEntry);
+                    ZipEntry zipEntry = new ZipEntry(fileGetResponseDTO.getFileName());
+                    zipEntry.setSize(fileGetResponseDTO.getSize());
+                    zipEntry.setTime(System.currentTimeMillis());
+                    zipOutputStream.putNextEntry(zipEntry);
 
-                StreamUtils.copy(inputStreamResource, zipOutputStream);
-                zipOutputStream.closeEntry();
-
-                archivedFilesGetResponseDTO.setSize(archivedFilesGetResponseDTO.getSize() + fileGetResponseDTO.getSize());
+                    StreamUtils.copy(inputStreamResource.getInputStream(), zipOutputStream);
+                    zipOutputStream.closeEntry();
+                }
+                zipOutputStream.finish();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            zipOutputStream.finish();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return archivedFilesGetResponseDTO;
+        };
     }
 
 }

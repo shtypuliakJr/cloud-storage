@@ -9,21 +9,21 @@ paths:
         - get-file-controller
       summary: Get files archive
       operationId: downloadFilesZip
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                type: string
+      parameters:
+        - name: fileIds
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: OK
           content:
             multipart/form-data:
               schema:
-                type: string
-                format: binary
+                $ref: StreamingResponseBody
     post:
       tags:
         - upload-file-controller
@@ -64,21 +64,20 @@ paths:
           required: true
           schema:
             type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                type: string
+        - name: chunkIds
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: OK
           content:
             multipart/form-data:
               schema:
-                type: string
-                format: binary
+                $ref: StreamingResponseBody
     post:
       tags:
         - upload-file-controller

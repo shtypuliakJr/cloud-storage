@@ -5,6 +5,7 @@ import edu.nau.cs.file.service.dto.FileGetResponseDTO;
 import edu.nau.cs.file.service.service.get.GetChunkService;
 import edu.nau.cs.file.service.service.get.GetFileService;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -12,7 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static edu.nau.cs.file.service.constants.TemporaryConstants.USER_ID;
@@ -24,6 +27,7 @@ public class GetFileController implements GetFileControllerApi {
     private final GetFileService getFileService;
     private final GetChunkService getChunkService;
     private final String userId = USER_ID;
+    private final HttpServletResponse response;
 
     @Override
     public ResponseEntity<Resource> downloadFile(String fileId) {
@@ -35,14 +39,13 @@ public class GetFileController implements GetFileControllerApi {
                 .body(new InputStreamResource(fileObjectDTO.getBody()));
     }
 
+    @SneakyThrows
     @Override
-    public ResponseEntity<Resource> downloadFilesZip(List<String> fileIds) {
-        FileGetResponseDTO archivedFiles = getFileService.getArchivedFiles(userId, fileIds);
+    public ResponseEntity<StreamingResponseBody> downloadFilesZip(List<String> fileIds) {
+        StreamingResponseBody streamingArchivedFilesResponse = getFileService.getArchivedFiles(userId, fileIds, response.getOutputStream());
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=\"%s\"", archivedFiles.getFileName()))
-                .contentLength(archivedFiles.getSize())
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(new InputStreamResource(archivedFiles.getBody()));
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=files.zip")
+                .body(streamingArchivedFilesResponse);
     }
 
     @Override
@@ -55,13 +58,13 @@ public class GetFileController implements GetFileControllerApi {
                 .body(new InputStreamResource(fileChunkDTO.getBody()));
     }
 
+    @SneakyThrows
     @Override
-    public ResponseEntity<Resource> downloadFileChunksZip(String fileId, List<String> chunkIds) {
-        ChunkGetResponseDTO archivedChunks = getChunkService.getArchivedFileChunks(userId, fileId, chunkIds);
+    public ResponseEntity<StreamingResponseBody> downloadFileChunksZip(String fileId, List<String> chunkIds) {
+        StreamingResponseBody streamingArchivedChunksResponse = getChunkService.getArchivedFileChunks(userId, fileId, chunkIds, response.getOutputStream());
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=\"%s\"", archivedChunks.getFileName()))
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(new InputStreamResource(archivedChunks.getBody()));
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=chunks.zip")
+                .body(streamingArchivedChunksResponse);
     }
 
 }

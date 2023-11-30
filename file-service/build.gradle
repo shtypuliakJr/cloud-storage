@@ -67,7 +67,8 @@ openApiGenerate {
             "FileObjectDeleteDTO"    : "edu.nau.cs.file.service.dto.FileObjectDeleteDTO",
             "FileChunkDTO"           : "edu.nau.cs.file.service.dto.transfer.FileChunkDTO",
             "FileObjectDTO"          : "edu.nau.cs.file.service.dto.transfer.FileObjectDTO",
-            "FolderObjectDTO"        : "edu.nau.cs.file.service.dto.transfer.FolderObjectDTO"
+            "FolderObjectDTO"        : "edu.nau.cs.file.service.dto.transfer.FolderObjectDTO",
+            "StreamingResponseBody"  : "org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody"
     ]
 }
 

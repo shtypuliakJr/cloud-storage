@@ -9,18 +9,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 @RequiredArgsConstructor
 @Service
-public class GetFileChunkServiceImpl implements GetChunkService {
+public class GetChunkServiceImpl implements GetChunkService {
 
     private final RestChunkMetaService restChunkMetaService;
     private final AwsS3Service awsS3Service;
@@ -41,28 +42,26 @@ public class GetFileChunkServiceImpl implements GetChunkService {
     }
 
     @Override
-    public ChunkGetResponseDTO getArchivedFileChunks(String usedId, String fileId, List<String> chunkIds) {
-        ChunkGetResponseDTO archivedChunksGetResponseDTO = new ChunkGetResponseDTO();
-        try (ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream("chunks.zip"))) {
-            for (String chunkId : chunkIds) {
-                ChunkGetResponseDTO chunkGetResponseDTO = this.getChunk(usedId, fileId, chunkId);
-                InputStream inputStreamResource = chunkGetResponseDTO.getBody();
+    public StreamingResponseBody getArchivedFileChunks(String userId, String fileId, List<String> chunkIds, OutputStream outputStream) {
+        return responseOutputStream -> {
+            try (ZipOutputStream zipOutputStream = new ZipOutputStream(outputStream)) {
+                for (String chunkId : chunkIds) {
+                    ChunkGetResponseDTO chunkGetResponseDTO = this.getChunk(userId, fileId, chunkId);
+                    InputStream inputStreamResource = chunkGetResponseDTO.getBody();
 
-                ZipEntry zipEntry = new ZipEntry(chunkGetResponseDTO.getFileName());
-                zipEntry.setSize(chunkGetResponseDTO.getSize());
-                zipEntry.setTime(System.currentTimeMillis());
-                zipOutputStream.putNextEntry(zipEntry);
+                    ZipEntry zipEntry = new ZipEntry(chunkGetResponseDTO.getFileName());
+                    zipEntry.setSize(chunkGetResponseDTO.getSize());
+                    zipEntry.setTime(System.currentTimeMillis());
+                    zipOutputStream.putNextEntry(zipEntry);
 
-                StreamUtils.copy(inputStreamResource, zipOutputStream);
-                zipOutputStream.closeEntry();
-
-                archivedChunksGetResponseDTO.setSize(archivedChunksGetResponseDTO.getSize() + chunkGetResponseDTO.getSize());
+                    StreamUtils.copy(inputStreamResource, zipOutputStream);
+                    zipOutputStream.closeEntry();
+                }
+                zipOutputStream.finish();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            zipOutputStream.finish();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return archivedChunksGetResponseDTO;
+        };
     }
 
 }
