@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface RestChunkMetaService {
 
-    FileChunkDTO getChunkObject(@NonNull String fileId);
+    FileChunkDTO getChunkObject(@NonNull String chunkId, @NonNull String fileId);
 
     FileChunkDTO saveChunkObject(@NonNull FileChunkDTO fileObjectDTO);
 

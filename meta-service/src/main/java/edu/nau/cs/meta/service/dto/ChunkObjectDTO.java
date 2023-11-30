@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder(setterPrefix = "with")
-public class FileChunkDTO implements Serializable {
+public class ChunkObjectDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 7607023141380020931L;

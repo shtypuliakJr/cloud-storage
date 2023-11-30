@@ -20,13 +20,13 @@ public class RestChunkMetaServiceImpl implements RestChunkMetaService {
     private final MetaServiceRestTemplate restTemplate;
 
     @Override
-    public FileChunkDTO getChunkObject(@NonNull String chunkId) {
+    public FileChunkDTO getChunkObject(@NonNull String chunkId, @NonNull String fileId) {
         return restTemplate.getForEntity(BASE_ENDPOINT + CHUNKS + DASH + chunkId, FileChunkDTO.class);
     }
 
     @Override
-    public FileChunkDTO saveChunkObject(@NonNull FileChunkDTO fileObjectDTO) {
-        return restTemplate.postForEntity(BASE_ENDPOINT + CHUNKS, fileObjectDTO, FileChunkDTO.class);
+    public FileChunkDTO saveChunkObject(@NonNull FileChunkDTO fileChunkDTO) {
+        return restTemplate.postForEntity(BASE_ENDPOINT + CHUNKS, fileChunkDTO, FileChunkDTO.class);
     }
 
     @Override

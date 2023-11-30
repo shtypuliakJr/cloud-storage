@@ -1,6 +1,5 @@
 package edu.nau.cs.file.service.service.upload.impl;
 
-import edu.nau.cs.file.service.dto.FileChunkUploadDTO;
 import edu.nau.cs.file.service.dto.FileUploadPayload;
 import edu.nau.cs.file.service.dto.transfer.FileChunkDTO;
 import edu.nau.cs.file.service.service.upload.UploadFileChunkService;

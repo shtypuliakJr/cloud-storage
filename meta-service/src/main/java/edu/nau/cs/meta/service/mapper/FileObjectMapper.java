@@ -1,6 +1,6 @@
 package edu.nau.cs.meta.service.mapper;
 
-import edu.nau.cs.meta.service.dto.FileChunkDTO;
+import edu.nau.cs.meta.service.dto.ChunkObjectDTO;
 import edu.nau.cs.meta.service.dto.FileObjectDTO;
 import edu.nau.cs.meta.service.entity.FileObject;
 import edu.nau.cs.meta.service.entity.Tag;
@@ -17,7 +17,7 @@ public class FileObjectMapper {
     private final ChunkMapper chunkMapper;
 
     public FileObjectDTO mapFileObjectToDTO(FileObject fileObject) {
-        List<FileChunkDTO> fileChunkDTOs = fileObject.getChunks().stream()
+        List<ChunkObjectDTO> chunkObjectDTOS = fileObject.getChunks().stream()
                 .map(chunkMapper::mapChunkToDTO)
                 .toList();
         return FileObjectDTO.builder()
@@ -27,8 +27,8 @@ public class FileObjectMapper {
                 .withS3Path(fileObject.getS3Path())
                 .withCreatedAt(fileObject.getCreatedAt())
                 .withUpdatedAt(fileObject.getUpdatedAt())
-                .withChunks(fileChunkDTOs)
-                .withSize(fileChunkDTOs.stream().map(FileChunkDTO::getChunkSize).reduce(Long::sum).orElse(null))
+                .withChunks(chunkObjectDTOS)
+                .withSize(chunkObjectDTOS.stream().map(ChunkObjectDTO::getChunkSize).reduce(Long::sum).orElse(null))
                 .withParentFolderId(fileObject.getParentFolderObject().getId())
                 .withUserId(fileObject.getUser().getId())
                 .withTag(Optional.ofNullable(fileObject.getTag()).map(Tag::getTagName).orElse(null))

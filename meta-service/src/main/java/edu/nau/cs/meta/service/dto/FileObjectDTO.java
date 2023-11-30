@@ -33,7 +33,7 @@ public class FileObjectDTO implements Serializable {
 
     private String parentFolderId;
 
-    private List<FileChunkDTO> chunks;
+    private List<ChunkObjectDTO> chunks;
 
     private String userId;
 

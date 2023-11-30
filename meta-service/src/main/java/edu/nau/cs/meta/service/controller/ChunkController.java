@@ -1,6 +1,6 @@
 package edu.nau.cs.meta.service.controller;
 
-import edu.nau.cs.meta.service.dto.FileChunkDTO;
+import edu.nau.cs.meta.service.dto.ChunkObjectDTO;
 import edu.nau.cs.meta.service.service.ChunkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,18 +29,18 @@ public class ChunkController {
     private final String userId = USER_ID;
 
     @GetMapping("/{chunkId}")
-    public ResponseEntity<FileChunkDTO> getChunkData(@PathVariable String chunkId) {
+    public ResponseEntity<ChunkObjectDTO> getChunkData(@PathVariable String chunkId) {
         return ResponseEntity.ok(chunkService.getChunkData(userId, chunkId));
     }
 
     @PostMapping
-    public ResponseEntity<FileChunkDTO> saveChunkData(@RequestBody FileChunkDTO fileChunkDTO) {
-        return ResponseEntity.ok(chunkService.saveChunkData(userId, fileChunkDTO));
+    public ResponseEntity<ChunkObjectDTO> saveChunkData(@RequestBody ChunkObjectDTO chunkObjectDTO) {
+        return ResponseEntity.ok(chunkService.saveChunkData(userId, chunkObjectDTO));
     }
 
     @PutMapping("/{chunkId}")
-    public ResponseEntity<FileChunkDTO> editChunkData(@PathVariable String chunkId, @RequestBody FileChunkDTO fileChunkDTO) {
-        return ResponseEntity.ok(chunkService.editChunkData(userId, chunkId, fileChunkDTO));
+    public ResponseEntity<ChunkObjectDTO> editChunkData(@PathVariable String chunkId, @RequestBody ChunkObjectDTO chunkObjectDTO) {
+        return ResponseEntity.ok(chunkService.editChunkData(userId, chunkId, chunkObjectDTO));
     }
 
     @DeleteMapping("/{chunkId}")

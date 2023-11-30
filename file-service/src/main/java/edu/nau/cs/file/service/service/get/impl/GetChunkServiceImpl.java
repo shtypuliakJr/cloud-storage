@@ -31,7 +31,7 @@ public class GetChunkServiceImpl implements GetChunkService {
 
     @Override
     public ChunkGetResponseDTO getChunk(String userId, String fileId, String fileChunkId) {
-        FileChunkDTO chunkObject = restChunkMetaService.getChunkObject(fileId);
+        FileChunkDTO chunkObject = restChunkMetaService.getChunkObject(fileChunkId, fileId);
         byte[] chunkBody = awsS3Service.getObject(chunkObject.getS3Key(), bucket);
 
         return ChunkGetResponseDTO.builder()

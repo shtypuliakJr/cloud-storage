@@ -30,9 +30,9 @@ public class SearchController {
         return ResponseEntity.ok(searchService.searchFileOrFolderByTemplate(objectTemplate));
     }
 
-    @GetMapping(CHUNKS + "/{chunkId}")
-    public ResponseEntity<SearchResultObjectDTO> searchChunkById(@PathVariable String chunkId) {
-        return ResponseEntity.ok(searchService.searchChunkById(chunkId));
+    @GetMapping(FOLDERS + "/{folderId}")
+    public ResponseEntity<SearchResultObjectDTO> searchFileOrFolderById(@PathVariable String folderId) {
+        return ResponseEntity.ok(searchService.searchFolderById(folderId));
     }
 
     @GetMapping(FILES + "/{fileId}")
@@ -40,9 +40,9 @@ public class SearchController {
         return ResponseEntity.ok(searchService.searchFileById(fileId));
     }
 
-    @GetMapping(FOLDERS + "/folderId")
-    public ResponseEntity<SearchResultObjectDTO> searchFileOrFolderById(@PathVariable String folderId) {
-        return ResponseEntity.ok(searchService.searchFolderById(folderId));
+    @GetMapping(CHUNKS + "/{chunkId}")
+    public ResponseEntity<SearchResultObjectDTO> searchChunkById(@PathVariable String chunkId) {
+        return ResponseEntity.ok(searchService.searchChunkById(chunkId));
     }
 
 }

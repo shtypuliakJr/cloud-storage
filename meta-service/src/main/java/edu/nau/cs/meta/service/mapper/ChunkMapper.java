@@ -1,14 +1,14 @@
 package edu.nau.cs.meta.service.mapper;
 
-import edu.nau.cs.meta.service.dto.FileChunkDTO;
+import edu.nau.cs.meta.service.dto.ChunkObjectDTO;
 import edu.nau.cs.meta.service.entity.Chunk;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ChunkMapper {
 
-    public FileChunkDTO mapChunkToDTO(Chunk chunk) {
-        return FileChunkDTO.builder()
+    public ChunkObjectDTO mapChunkToDTO(Chunk chunk) {
+        return ChunkObjectDTO.builder()
                 .withChunkId(chunk.getId())
                 .withChunkOrder(chunk.getChunkOrder())
                 .withChunkSize(chunk.getChunkSize())
@@ -20,15 +20,15 @@ public class ChunkMapper {
                 .build();
     }
 
-    public Chunk mapChunkToEntity(FileChunkDTO fileChunkDTO) {
+    public Chunk mapChunkToEntity(ChunkObjectDTO chunkObjectDTO) {
         return Chunk.builder()
-                .id(fileChunkDTO.getChunkId())
-                .chunkOrder(fileChunkDTO.getChunkOrder())
-                .chunkSize(fileChunkDTO.getChunkSize())
-                .chunkChecksum(fileChunkDTO.getChunkChecksum())
-                .s3Key(fileChunkDTO.getS3Key())
-                .createdAt(fileChunkDTO.getCreatedAt())
-                .updatedAt(fileChunkDTO.getUpdatedAt())
+                .id(chunkObjectDTO.getChunkId())
+                .chunkOrder(chunkObjectDTO.getChunkOrder())
+                .chunkSize(chunkObjectDTO.getChunkSize())
+                .chunkChecksum(chunkObjectDTO.getChunkChecksum())
+                .s3Key(chunkObjectDTO.getS3Key())
+                .createdAt(chunkObjectDTO.getCreatedAt())
+                .updatedAt(chunkObjectDTO.getUpdatedAt())
                 .build();
     }
 
