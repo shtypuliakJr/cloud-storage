@@ -1,5 +1,6 @@
-package edu.nau.cs.file.service.dto;
+package edu.nau.cs.file.service.dto.delete;
 
+import edu.nau.cs.file.service.dto.delete.ChunkObjectDeleteDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

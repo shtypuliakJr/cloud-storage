@@ -252,7 +252,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: FileChunkDeleteDTO
+                $ref: ChunkObjectDeleteDTO
   /cs-api/files/{fileId}/chunks/batch:
     post:
       tags:
@@ -319,4 +319,4 @@ paths:
                 type: array
                 items:
                   type: object
-                  $ref: FileChunkDeleteDTO
+                  $ref: ChunkObjectDeleteDTO

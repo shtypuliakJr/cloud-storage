@@ -1,7 +1,7 @@
 package edu.nau.cs.file.service.service.chunk.impl;
 
-import edu.nau.cs.file.service.dto.FileUploadPayload;
-import edu.nau.cs.file.service.dto.S3FileChunkPayload;
+import edu.nau.cs.file.service.dto.payload.FileUploadPayload;
+import edu.nau.cs.file.service.dto.payload.S3FileChunkPayload;
 import edu.nau.cs.file.service.service.chunk.ChunkService;
 import edu.nau.cs.file.service.util.ChecksumUtil;
 import edu.nau.cs.file.service.util.S3KeyPathResolver;

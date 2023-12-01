@@ -1,6 +1,6 @@
 package edu.nau.cs.file.service.s3;
 
-import edu.nau.cs.file.service.dto.S3FileChunkPayload;
+import edu.nau.cs.file.service.dto.payload.S3FileChunkPayload;
 import edu.nau.cs.file.service.exception.CsFileServiceS3FileIOException;
 
 import java.io.InputStream;

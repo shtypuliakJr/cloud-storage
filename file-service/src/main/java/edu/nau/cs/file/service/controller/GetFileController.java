@@ -1,7 +1,7 @@
 package edu.nau.cs.file.service.controller;
 
-import edu.nau.cs.file.service.dto.ChunkGetResponseDTO;
-import edu.nau.cs.file.service.dto.FileGetResponseDTO;
+import edu.nau.cs.file.service.dto.get.ChunkGetResponseDTO;
+import edu.nau.cs.file.service.dto.get.FileGetResponseDTO;
 import edu.nau.cs.file.service.service.get.GetChunkService;
 import edu.nau.cs.file.service.service.get.GetFileService;
 import lombok.RequiredArgsConstructor;

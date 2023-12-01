@@ -1,6 +1,6 @@
 package edu.nau.cs.file.service.service.get.impl;
 
-import edu.nau.cs.file.service.dto.FileGetResponseDTO;
+import edu.nau.cs.file.service.dto.get.FileGetResponseDTO;
 import edu.nau.cs.file.service.dto.transfer.FileChunkDTO;
 import edu.nau.cs.file.service.dto.transfer.FileObjectDTO;
 import edu.nau.cs.file.service.s3.AwsS3Service;

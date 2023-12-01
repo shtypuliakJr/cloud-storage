@@ -1,4 +1,4 @@
-package edu.nau.cs.file.service.dto;
+package edu.nau.cs.file.service.dto.error;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

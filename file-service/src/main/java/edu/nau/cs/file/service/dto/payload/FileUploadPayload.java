@@ -1,4 +1,4 @@
-package edu.nau.cs.file.service.dto;
+package edu.nau.cs.file.service.dto.payload;
 
 import lombok.Builder;
 import lombok.Data;

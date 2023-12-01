@@ -1,7 +1,7 @@
 package edu.nau.cs.file.service.service.upload.impl;
 
-import edu.nau.cs.file.service.dto.FileUploadPayload;
-import edu.nau.cs.file.service.dto.S3FileChunkPayload;
+import edu.nau.cs.file.service.dto.payload.FileUploadPayload;
+import edu.nau.cs.file.service.dto.payload.S3FileChunkPayload;
 import edu.nau.cs.file.service.dto.transfer.FileObjectDTO;
 import edu.nau.cs.file.service.mapper.ChunkObjectDTOMapper;
 import edu.nau.cs.file.service.s3.AwsS3Service;

@@ -1,6 +1,6 @@
 package edu.nau.cs.file.service.service.delete;
 
-import edu.nau.cs.file.service.dto.FileObjectDeleteDTO;
+import edu.nau.cs.file.service.dto.delete.FileObjectDeleteDTO;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package edu.nau.cs.file.service.dto;
+package edu.nau.cs.file.service.dto.delete;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,5 +20,7 @@ public class ChunkObjectDeleteDTO implements Serializable {
     private String chunkId;
 
     private Long chunkSize;
+
+    private String fileId;
 
 }

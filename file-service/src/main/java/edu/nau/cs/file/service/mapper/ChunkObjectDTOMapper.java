@@ -1,6 +1,6 @@
 package edu.nau.cs.file.service.mapper;
 
-import edu.nau.cs.file.service.dto.S3FileChunkPayload;
+import edu.nau.cs.file.service.dto.payload.S3FileChunkPayload;
 import edu.nau.cs.file.service.dto.transfer.FileChunkDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

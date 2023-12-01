@@ -58,16 +58,15 @@ openApiGenerate {
             useTags      : "true"
     ]
     importMappings = [
-            "FileMetaDTO"            : "edu.nau.cs.file.service.dto.FileMetaDTO",
-            "ErrorDTO"               : "edu.nau.cs.file.service.dto.ErrorDTO",
-            "DeleteObjectResponseDTO": "edu.nau.cs.file.service.dto.DeleteObjectResponseDTO",
-            "DeleteChunkResponseDTO" : "edu.nau.cs.file.service.dto.DeleteChunkResponseDTO",
-            "FileChunkUploadDTO"     : "edu.nau.cs.file.service.dto.FileChunkUploadDTO",
-            "FileChunkDeleteDTO"     : "edu.nau.cs.file.service.dto.FileChunkDeleteDTO",
-            "FileObjectDeleteDTO"    : "edu.nau.cs.file.service.dto.FileObjectDeleteDTO",
+            "ChunkObjectDeleteDTO"   : "edu.nau.cs.file.service.dto.delete.ChunkObjectDeleteDTO",
+            "FileObjectDeleteDTO"    : "edu.nau.cs.file.service.dto.delete.FileObjectDeleteDTO",
+
+            "ErrorDTO"               : "edu.nau.cs.file.service.dto.error.ErrorDTO",
+
             "FileChunkDTO"           : "edu.nau.cs.file.service.dto.transfer.FileChunkDTO",
             "FileObjectDTO"          : "edu.nau.cs.file.service.dto.transfer.FileObjectDTO",
             "FolderObjectDTO"        : "edu.nau.cs.file.service.dto.transfer.FolderObjectDTO",
+
             "StreamingResponseBody"  : "org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody"
     ]
 }

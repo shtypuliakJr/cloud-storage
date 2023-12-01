@@ -1,6 +1,6 @@
 package edu.nau.cs.file.service.service.get;
 
-import edu.nau.cs.file.service.dto.FileGetResponseDTO;
+import edu.nau.cs.file.service.dto.get.FileGetResponseDTO;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.io.OutputStream;

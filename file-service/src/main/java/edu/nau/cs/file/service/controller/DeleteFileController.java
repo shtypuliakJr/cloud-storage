@@ -1,7 +1,7 @@
 package edu.nau.cs.file.service.controller;
 
-import edu.nau.cs.file.service.dto.FileChunkDeleteDTO;
-import edu.nau.cs.file.service.dto.FileObjectDeleteDTO;
+import edu.nau.cs.file.service.dto.delete.ChunkObjectDeleteDTO;
+import edu.nau.cs.file.service.dto.delete.FileObjectDeleteDTO;
 import edu.nau.cs.file.service.service.delete.DeleteFileChunkService;
 import edu.nau.cs.file.service.service.delete.DeleteFileService;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +31,12 @@ public class DeleteFileController implements DeleteFileControllerApi {
     }
 
     @Override
-    public ResponseEntity<FileChunkDeleteDTO> deleteFileChunk(String fileId, String chunkId) {
+    public ResponseEntity<ChunkObjectDeleteDTO> deleteFileChunk(String fileId, String chunkId) {
         return ResponseEntity.ok(deleteFileChunkService.deleteFileChunk(fileId, chunkId, userId));
     }
 
     @Override
-    public ResponseEntity<List<FileChunkDeleteDTO>> deleteBatchFileChunks(String fileId, List<String> chunkIds) {
+    public ResponseEntity<List<ChunkObjectDeleteDTO>> deleteBatchFileChunks(String fileId, List<String> chunkIds) {
         return ResponseEntity.ok(deleteFileChunkService.deleteFileChunks(fileId, chunkIds, userId));
     }
 

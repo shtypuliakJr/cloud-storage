@@ -1,7 +1,7 @@
 package edu.nau.cs.file.service.service.delete.impl;
 
-import edu.nau.cs.file.service.dto.ChunkObjectDeleteDTO;
-import edu.nau.cs.file.service.dto.FileObjectDeleteDTO;
+import edu.nau.cs.file.service.dto.delete.ChunkObjectDeleteDTO;
+import edu.nau.cs.file.service.dto.delete.FileObjectDeleteDTO;
 import edu.nau.cs.file.service.dto.transfer.FileChunkDTO;
 import edu.nau.cs.file.service.dto.transfer.FileObjectDTO;
 import edu.nau.cs.file.service.s3.AwsS3Service;
@@ -39,6 +39,7 @@ public class DeleteFileServiceImpl implements DeleteFileService {
                         .map(fileChunkDTO -> ChunkObjectDeleteDTO.builder()
                                 .chunkId(fileChunkDTO.getChunkId())
                                 .chunkSize(fileChunkDTO.getChunkSize())
+                                .fileId(fileChunkDTO.getFileObjectId())
                                 .build())
                         .toList())
                 .build();
