@@ -10,12 +10,12 @@ import java.util.List;
 public class DeleteFileChunkServiceImpl implements DeleteFileChunkService {
 
     @Override
-    public FileChunkDeleteDTO deleteFileChunk(String fileId, String fileChunkId) {
+    public FileChunkDeleteDTO deleteFileChunk(String fileId, String chunkId, String userId) {
         return null;
     }
 
     @Override
-    public List<FileChunkDeleteDTO> deleteFileChunks(List<String> fileChunkIds) {
+    public List<FileChunkDeleteDTO> deleteFileChunks(String fileId, List<String> chunkIds, String userId) {
         return null;
     }
 

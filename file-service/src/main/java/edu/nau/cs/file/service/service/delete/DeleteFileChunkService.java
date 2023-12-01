@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface DeleteFileChunkService {
 
-    FileChunkDeleteDTO deleteFileChunk(String fileId, String fileChunkId);
+    FileChunkDeleteDTO deleteFileChunk(String fileId, String chunkId, String userId);
 
-    List<FileChunkDeleteDTO> deleteFileChunks(List<String> fileChunkIds);
+    List<FileChunkDeleteDTO> deleteFileChunks(String fileId, List<String> chunkIds, String userId);
 
 }

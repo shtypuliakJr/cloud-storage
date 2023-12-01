@@ -15,4 +15,7 @@ public interface RestFileMetaService {
 
     void deleteFileObjects(@NonNull List<String> fileIds);
 
+    FileObjectDTO deleteFileObjectWithResponse(@NonNull String fileId);
+
+    List<FileObjectDTO> deleteFileObjectsWithResponse(@NonNull List<String> fileIds);
 }

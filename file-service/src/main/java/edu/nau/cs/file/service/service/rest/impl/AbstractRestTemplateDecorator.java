@@ -5,6 +5,9 @@ import edu.nau.cs.file.service.service.rest.RestTemplateDecorator;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -80,6 +84,44 @@ public class AbstractRestTemplateDecorator implements RestTemplateDecorator {
             log.error("Bad response", e);
             throw new RestException(e.getMessage());
         }
+    }
+
+    @Override
+    public <T> T deleteForEntityWithResponse(String path, Class<T> responseType) {
+        ResponseEntity<T> response;
+        try {
+            response = restTemplate.exchange(getURI(path), HttpMethod.DELETE, HttpEntity.EMPTY, responseType);
+        } catch (HttpClientErrorException ex) {
+            log.error("Bad client response - {}", ex.getMessage());
+            throw new RestException(ex.getMessage());
+        } catch (Exception e) {
+            log.error("Bad response", e);
+            throw new RestException(e.getMessage());
+        }
+        checkHttpStatus(response, path, RequestMethod.DELETE);
+        return response.getBody();
+    }
+
+    @Override
+    public <T> List<T> deleteForEntitiesWithResponse(final String path, Map<String, ?> queryParams) {
+        ResponseEntity<List<T>> response;
+        try {
+            response = restTemplate.exchange(
+                    getURI(path).toURL().toString(),
+                    HttpMethod.DELETE,
+                    HttpEntity.EMPTY,
+                    new ParameterizedTypeReference<>() {
+                    },
+                    queryParams);
+        } catch (HttpClientErrorException ex) {
+            log.error("Bad client response - {}", ex.getMessage());
+            throw new RestException(ex.getMessage());
+        } catch (Exception e) {
+            log.error("Bad response", e);
+            throw new RestException(e.getMessage());
+        }
+        checkHttpStatus(response, path, RequestMethod.DELETE);
+        return response.getBody();
     }
 
     private URI getURI(String path) {

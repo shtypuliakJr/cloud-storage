@@ -22,22 +22,22 @@ public class DeleteFileController implements DeleteFileControllerApi {
 
     @Override
     public ResponseEntity<FileObjectDeleteDTO> deleteFile(String fileId) {
-        return ResponseEntity.ok(deleteFileService.deleteFile(fileId));
+        return ResponseEntity.ok(deleteFileService.deleteFile(fileId, userId));
     }
 
     @Override
     public ResponseEntity<List<FileObjectDeleteDTO>> deleteBatchFiles(List<String> fileIds) {
-        return ResponseEntity.ok(deleteFileService.deleteFiles(fileIds));
+        return ResponseEntity.ok(deleteFileService.deleteFiles(fileIds, userId));
     }
 
     @Override
     public ResponseEntity<FileChunkDeleteDTO> deleteFileChunk(String fileId, String chunkId) {
-        return ResponseEntity.ok(deleteFileChunkService.deleteFileChunk(fileId, chunkId));
+        return ResponseEntity.ok(deleteFileChunkService.deleteFileChunk(fileId, chunkId, userId));
     }
 
     @Override
     public ResponseEntity<List<FileChunkDeleteDTO>> deleteBatchFileChunks(String fileId, List<String> chunkIds) {
-        return ResponseEntity.ok(deleteFileChunkService.deleteFileChunks(chunkIds));
+        return ResponseEntity.ok(deleteFileChunkService.deleteFileChunks(fileId, chunkIds, userId));
     }
 
 }

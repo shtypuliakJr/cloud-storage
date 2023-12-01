@@ -74,6 +74,13 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     }
 
     @Override
+    public List<S3Item> deleteObjects(List<String> keys, String bucket) {
+        return keys.stream()
+                .map(key -> this.deleteObject(key, bucket))
+                .toList();
+    }
+
+    @Override
     public InputStream getObjectAsStream(String keyName, String bucketName) {
         ResponseBytes<GetObjectResponse> response = s3Client.getObject(request ->
                 request.key(keyName).bucket(bucketName), ResponseTransformer.toBytes());

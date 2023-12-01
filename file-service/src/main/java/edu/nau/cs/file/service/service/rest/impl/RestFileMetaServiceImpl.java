@@ -39,4 +39,14 @@ public class RestFileMetaServiceImpl implements RestFileMetaService {
         restTemplate.deleteForEntities(BASE_ENDPOINT + FILES, Map.of("fileIds", fileIds));
     }
 
+    @Override
+    public FileObjectDTO deleteFileObjectWithResponse(@NonNull String fileId) {
+        return restTemplate.deleteForEntityWithResponse(BASE_ENDPOINT + FILES + DASH + fileId, FileObjectDTO.class);
+    }
+
+    @Override
+    public List<FileObjectDTO> deleteFileObjectsWithResponse(@NonNull List<String> fileIds) {
+        return restTemplate.deleteForEntitiesWithResponse(BASE_ENDPOINT + FILES, Map.of("fileIds", fileIds));
+    }
+
 }

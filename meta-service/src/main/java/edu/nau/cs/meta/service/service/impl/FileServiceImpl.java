@@ -71,12 +71,16 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void deleteFileData(String userId, String fileId) {
-
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CsFileObjectDoesNotExistsException(userId));
+        fileObjectRepository.deleteById(fileId);
     }
 
     @Override
     public void deleteFilesData(String userId, List<String> fileIds) {
-
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CsFileObjectDoesNotExistsException(userId));
+        fileObjectRepository.deleteAllById(fileIds);
     }
 
 }

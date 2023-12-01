@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface AwsS3Service {
 
+    List<S3Item> deleteObjects(List<String> keys, String bucket);
+
     InputStream getObjectAsStream(String keyName, String bucketName);
 
     byte[] getObject(String keyName, String bucketName) throws CsFileServiceS3FileIOException;

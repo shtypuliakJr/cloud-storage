@@ -1,18 +1,20 @@
 package edu.nau.cs.file.service.service.rest;
 
-import edu.nau.cs.file.service.exception.RestException;
-import org.springframework.lang.Nullable;
-
+import java.util.List;
 import java.util.Map;
 
 public interface RestTemplateDecorator {
 
-    <T> T postForEntity(String path, @Nullable Object request, Class<T> responseType) throws RestException;
+    <T> T getForEntity(String path, Class<T> responseType);
 
-    <T> T getForEntity(String path, Class<T> responseType) throws RestException;
+    <T> T postForEntity(String path, Object request, Class<T> responseType);
 
-    void deleteForEntity(String path) throws RestException;
+    void deleteForEntity(String path);
 
     void deleteForEntities(String path, Map<String, ?> queryParams);
+
+    <T> T deleteForEntityWithResponse(String path, Class<T> responseType);
+
+    <T> List<T> deleteForEntitiesWithResponse(String path, Map<String, ?> queryParams);
 
 }

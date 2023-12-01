@@ -186,15 +186,16 @@ paths:
     delete:
       tags:
         - delete-file-controller
-      summary: Delete file by id
+      summary: Delete files by ids
       operationId: deleteBatchFiles
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                type: string
+      parameters:
+        - name: fileIds
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: OK
@@ -203,7 +204,6 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
                   $ref: FileObjectDeleteDTO
   /cs-api/files/{fileId}/chunks/{chunkId}:
     get:
@@ -303,13 +303,13 @@ paths:
           required: true
           schema:
             type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                type: string
+        - name: chunkIds
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: OK
