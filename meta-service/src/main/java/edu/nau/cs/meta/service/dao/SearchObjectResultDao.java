@@ -17,6 +17,7 @@ public class SearchObjectResultDao {
             SELECT
             	id as "ID",
             	folder_name as "OBJECT_NAME",
+            	folder_path as "OBJECT_PATH",
             	true as "IS_FOLDER"
               FROM folder_object
              WHERE user_id = :userId
@@ -25,6 +26,7 @@ public class SearchObjectResultDao {
             SELECT
             	id as "ID",
             	file_name as "OBJECT_NAME",
+            	file_path as "OBJECT_PATH",
             	false as "IS_FOLDER"
               FROM file_object
              WHERE user_id = :userId
@@ -37,7 +39,13 @@ public class SearchObjectResultDao {
                 new MapSqlParameterSource()
                         .addValue("userId", userId, Types.VARCHAR)
                         .addValue("objectNameTemplate", objectNameTemplate, Types.VARCHAR),
-                new SearchObjectResultMapper());
+                (rs, rowNum) -> new SearchResultObjectDTO(
+                        rs.getString("ID"),
+                        rs.getString("OBJECT_NAME"),
+                        rs.getString("OBJECT_PATH"),
+                        rs.getBoolean("IS_FOLDER"),
+                        rowNum
+                ));
     }
 
 }

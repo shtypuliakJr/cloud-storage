@@ -15,6 +15,8 @@ public class SearchResultObjectDTO {
 
     private String objectName;
 
+    private String objectPath;
+
     private Boolean isFolder;
 
     private int order;

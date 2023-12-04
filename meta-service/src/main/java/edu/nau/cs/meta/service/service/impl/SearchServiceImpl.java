@@ -1,8 +1,16 @@
 package edu.nau.cs.meta.service.service.impl;
 
 import edu.nau.cs.meta.service.dao.SearchObjectResultDao;
+import edu.nau.cs.meta.service.dto.search.ChunkSearchResultDTO;
+import edu.nau.cs.meta.service.dto.search.FileSearchResultDTO;
+import edu.nau.cs.meta.service.dto.search.FolderSearchResultDTO;
 import edu.nau.cs.meta.service.dto.search.SearchResultObjectDTO;
 import edu.nau.cs.meta.service.exception.CsChunkDoesNotExistsException;
+import edu.nau.cs.meta.service.exception.CsFileObjectDoesNotExistsException;
+import edu.nau.cs.meta.service.exception.CsFolderObjectDoesNotExistsException;
+import edu.nau.cs.meta.service.mapper.search.ChunkSearchResultMapper;
+import edu.nau.cs.meta.service.mapper.search.FileSearchResultMapper;
+import edu.nau.cs.meta.service.mapper.search.FolderSearchResultMapper;
 import edu.nau.cs.meta.service.repository.ChunkRepository;
 import edu.nau.cs.meta.service.repository.FileObjectRepository;
 import edu.nau.cs.meta.service.repository.FolderObjectRepository;
@@ -19,7 +27,12 @@ public class SearchServiceImpl implements SearchService {
     private final ChunkRepository chunkRepository;
     private final FileObjectRepository fileObjectRepository;
     private final FolderObjectRepository folderObjectRepository;
+
     private final SearchObjectResultDao searchObjectResultDao;
+
+    private final ChunkSearchResultMapper chunkSearchResultMapper;
+    private final FileSearchResultMapper fileSearchResultMapper;
+    private final FolderSearchResultMapper folderSearchResultMapper;
 
     @Override
     public List<SearchResultObjectDTO> searchFileOrFolderByTemplate(String objectTemplate, String userId) {
@@ -27,20 +40,32 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public SearchResultObjectDTO searchChunkById(String chunkId, String userId) {
+    public List<FileSearchResultDTO> searchByFileExtension(String extension, String userId) {
+        return fileObjectRepository.findAllByFileNameHasExtensionAndUserId(extension, userId).stream()
+                .map(fileSearchResultMapper::mapToFileSearchResultDTO)
+                .toList();
+    }
+
+    @Override
+    public ChunkSearchResultDTO searchChunkById(String chunkId, String userId) {
         return chunkRepository.findById(chunkId)
-                .map(chunk -> new SearchResultObjectDTO())
-                .orElseThrow(() -> new CsChunkDoesNotExistsException(chunkId));
+                .map(chunkSearchResultMapper::mapToChunkSearchResultDTO)
+                .orElseThrow(() -> new CsChunkDoesNotExistsException(userId, chunkId));
     }
 
     @Override
-    public SearchResultObjectDTO searchFileById(String fileId, String userId) {
-        return null;
+    public FileSearchResultDTO searchFileById(String fileId, String userId) {
+        return fileObjectRepository.findByIdAndUserId(fileId, userId)
+                .map(fileObject -> fileSearchResultMapper.mapToFileSearchResultDTO(fileObject, true))
+                .orElseThrow(() -> new CsFileObjectDoesNotExistsException(userId, fileId));
+
     }
 
     @Override
-    public SearchResultObjectDTO searchFolderById(String folderId, String userId) {
-        return null;
+    public FolderSearchResultDTO searchFolderById(String folderId, String userId) {
+        return folderObjectRepository.findByIdAndUserId(folderId, userId)
+                .map(folderSearchResultMapper::mapToFolderSearchResultDTO)
+                .orElseThrow(() -> new CsFolderObjectDoesNotExistsException(userId, folderId));
     }
 
 }

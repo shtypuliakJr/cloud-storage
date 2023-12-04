@@ -1,5 +1,8 @@
 package edu.nau.cs.meta.service.controller;
 
+import edu.nau.cs.meta.service.dto.search.ChunkSearchResultDTO;
+import edu.nau.cs.meta.service.dto.search.FileSearchResultDTO;
+import edu.nau.cs.meta.service.dto.search.FolderSearchResultDTO;
 import edu.nau.cs.meta.service.dto.search.SearchResultObjectDTO;
 import edu.nau.cs.meta.service.service.SearchService;
 import lombok.RequiredArgsConstructor;
@@ -32,19 +35,24 @@ public class SearchController {
         return ResponseEntity.ok(searchService.searchFileOrFolderByTemplate(objectTemplate, userId));
     }
 
-    @GetMapping(FOLDERS + "/{folderId}")
-    public ResponseEntity<SearchResultObjectDTO> searchFileOrFolderById(@PathVariable String folderId) {
-        return ResponseEntity.ok(searchService.searchFolderById(folderId, userId));
-    }
-
-    @GetMapping(FILES + "/{fileId}")
-    public ResponseEntity<SearchResultObjectDTO> searchFileById(@PathVariable String fileId) {
-        return ResponseEntity.ok(searchService.searchFileById(fileId, userId));
+    @GetMapping(FILES)
+    public ResponseEntity<List<FileSearchResultDTO>> searchFilesByExtension(@RequestParam String fileExtension) {
+        return ResponseEntity.ok(searchService.searchByFileExtension(fileExtension, userId));
     }
 
     @GetMapping(CHUNKS + "/{chunkId}")
-    public ResponseEntity<SearchResultObjectDTO> searchChunkById(@PathVariable String chunkId) {
+    public ResponseEntity<ChunkSearchResultDTO> searchChunkById(@PathVariable String chunkId) {
         return ResponseEntity.ok(searchService.searchChunkById(chunkId, userId));
+    }
+
+    @GetMapping(FILES + "/{fileId}")
+    public ResponseEntity<FileSearchResultDTO> searchFileById(@PathVariable String fileId) {
+        return ResponseEntity.ok(searchService.searchFileById(fileId, userId));
+    }
+
+    @GetMapping(FOLDERS + "/{folderId}")
+    public ResponseEntity<FolderSearchResultDTO> searchFileOrFolderById(@PathVariable String folderId) {
+        return ResponseEntity.ok(searchService.searchFolderById(folderId, userId));
     }
 
 }
