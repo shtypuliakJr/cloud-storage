@@ -20,4 +20,12 @@ public class ActionController {
         return ResponseEntity.ok().build();
     }
 
+    public ResponseEntity<Void> moveFile() {
+        return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<Void> moveFiles() {
+        return ResponseEntity.ok().build();
+    }
+
 }

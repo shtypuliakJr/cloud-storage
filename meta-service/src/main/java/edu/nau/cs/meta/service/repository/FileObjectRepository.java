@@ -14,4 +14,6 @@ public interface FileObjectRepository extends JpaRepository<FileObject, String> 
 
     List<FileObject> findAllByIdInAndUserId(List<String> fileIds, String userId);
 
+    List<FileObject> findByFileNameIsContaining(String objectTemplate);
+
 }

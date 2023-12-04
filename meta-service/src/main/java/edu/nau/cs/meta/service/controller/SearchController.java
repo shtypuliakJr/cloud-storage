@@ -1,6 +1,6 @@
 package edu.nau.cs.meta.service.controller;
 
-import edu.nau.cs.meta.service.dto.SearchResultObjectDTO;
+import edu.nau.cs.meta.service.dto.search.SearchResultObjectDTO;
 import edu.nau.cs.meta.service.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +17,7 @@ import static edu.nau.cs.meta.service.constants.Endpoint.CHUNKS;
 import static edu.nau.cs.meta.service.constants.Endpoint.FILES;
 import static edu.nau.cs.meta.service.constants.Endpoint.FOLDERS;
 import static edu.nau.cs.meta.service.constants.Endpoint.SEARCH;
+import static edu.nau.cs.meta.service.constants.TemporaryConstants.USER_ID;
 
 @RequiredArgsConstructor
 @RestController
@@ -24,25 +25,26 @@ import static edu.nau.cs.meta.service.constants.Endpoint.SEARCH;
 public class SearchController {
 
     private final SearchService searchService;
+    private final String userId = USER_ID;
 
     @GetMapping
     public ResponseEntity<List<SearchResultObjectDTO>> searchFileOrFolderByTemplate(@RequestParam String objectTemplate) {
-        return ResponseEntity.ok(searchService.searchFileOrFolderByTemplate(objectTemplate));
+        return ResponseEntity.ok(searchService.searchFileOrFolderByTemplate(objectTemplate, userId));
     }
 
     @GetMapping(FOLDERS + "/{folderId}")
     public ResponseEntity<SearchResultObjectDTO> searchFileOrFolderById(@PathVariable String folderId) {
-        return ResponseEntity.ok(searchService.searchFolderById(folderId));
+        return ResponseEntity.ok(searchService.searchFolderById(folderId, userId));
     }
 
     @GetMapping(FILES + "/{fileId}")
     public ResponseEntity<SearchResultObjectDTO> searchFileById(@PathVariable String fileId) {
-        return ResponseEntity.ok(searchService.searchFileById(fileId));
+        return ResponseEntity.ok(searchService.searchFileById(fileId, userId));
     }
 
     @GetMapping(CHUNKS + "/{chunkId}")
     public ResponseEntity<SearchResultObjectDTO> searchChunkById(@PathVariable String chunkId) {
-        return ResponseEntity.ok(searchService.searchChunkById(chunkId));
+        return ResponseEntity.ok(searchService.searchChunkById(chunkId, userId));
     }
 
 }
