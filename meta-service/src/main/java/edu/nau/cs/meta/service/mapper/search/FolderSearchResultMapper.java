@@ -6,6 +6,7 @@ import edu.nau.cs.meta.service.entity.FolderObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,11 +24,9 @@ public class FolderSearchResultMapper {
         List<FileSearchResultDTO> childFiles = folderObject.getCurrentFolderChildFiles().stream()
                 .map(fileSearchResultMapper::mapToFileSearchResultDTO)
                 .toList();
-        List<FolderSearchResultDTO> childFolders = depth == 0
-                ? null
-                : folderObject.getCurrentFolderChildFolders().stream()
-                .map(childFolder -> this.mapToFolderSearchResultDTO(childFolder, depth - 1))
-                .toList();
+        List<FolderSearchResultDTO> childFolders = Optional.of(getChildFolders(folderObject, depth))
+                .filter(folders -> !folders.isEmpty())
+                .orElse(null);
 
         String parentFolderId = Optional.ofNullable(folderObject.getParentFolder())
                 .map(FolderObject::getId)
@@ -43,6 +42,14 @@ public class FolderSearchResultMapper {
                 childFiles,
                 parentFolderId
         );
+    }
+
+    private List<FolderSearchResultDTO> getChildFolders(FolderObject folderObject, long depth) {
+        return depth == 0
+                ? Collections.emptyList()
+                : folderObject.getCurrentFolderChildFolders().stream()
+                .map(childFolder -> this.mapToFolderSearchResultDTO(childFolder, depth - 1))
+                .toList();
     }
 
 }

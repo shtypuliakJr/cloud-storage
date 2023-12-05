@@ -44,18 +44,20 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public FileObjectDTO saveFileData(String userId, FileObjectDTO fileObjectDTO) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CsFileObjectDoesNotExistsException(userId));
+
+        FolderObject parentFolderObject = Optional.ofNullable(fileObjectDTO.getParentFolderId())
+                .map(folderObjectRepository::findById)
+                .filter(Optional::isPresent).map(Optional::get)
+                .orElse(folderObjectRepository.findByFolderName(user.getUserName()).orElse(null));
+
         FileObject fileObject = fileObjectMapper.mapFileObjectToEntity(fileObjectDTO);
         List<Chunk> chunks = fileObjectDTO.getChunks().stream()
                 .map(chunkMapper::mapChunkToEntity)
                 .toList();
         chunks.forEach(chunk -> chunk.setFileObject(fileObject));
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new CsFileObjectDoesNotExistsException(userId));
-        FolderObject parentFolderObject = Optional.ofNullable(fileObjectDTO.getParentFolderId())
-                .map(folderObjectRepository::findById)
-                .filter(Optional::isPresent).map(Optional::get)
-                .orElse(folderObjectRepository.findByFolderName(user.getUserName()).orElse(null));
 
         fileObject.setUser(user);
         fileObject.setChunks(chunks);
