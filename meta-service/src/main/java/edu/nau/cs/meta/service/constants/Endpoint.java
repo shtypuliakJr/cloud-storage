@@ -9,5 +9,6 @@ public class Endpoint {
     public static final String FOLDERS = "/folders";
     public static final String SEARCH = "/search";
     public static final String DEVICES = "/devices";
+    public static final String WORKSPACE = "/workspace";
 
 }

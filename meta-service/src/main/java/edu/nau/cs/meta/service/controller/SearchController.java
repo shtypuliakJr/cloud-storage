@@ -4,6 +4,7 @@ import edu.nau.cs.meta.service.dto.search.ChunkSearchResultDTO;
 import edu.nau.cs.meta.service.dto.search.FileSearchResultDTO;
 import edu.nau.cs.meta.service.dto.search.FolderSearchResultDTO;
 import edu.nau.cs.meta.service.dto.search.SearchResultObjectDTO;
+import edu.nau.cs.meta.service.dto.search.WorkspaceResultDTO;
 import edu.nau.cs.meta.service.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import static edu.nau.cs.meta.service.constants.Endpoint.CHUNKS;
 import static edu.nau.cs.meta.service.constants.Endpoint.FILES;
 import static edu.nau.cs.meta.service.constants.Endpoint.FOLDERS;
 import static edu.nau.cs.meta.service.constants.Endpoint.SEARCH;
+import static edu.nau.cs.meta.service.constants.Endpoint.WORKSPACE;
 import static edu.nau.cs.meta.service.constants.TemporaryConstants.USER_ID;
 
 @RequiredArgsConstructor
@@ -33,6 +35,11 @@ public class SearchController {
     @GetMapping
     public ResponseEntity<List<SearchResultObjectDTO>> searchFileOrFolderByTemplate(@RequestParam String objectTemplate) {
         return ResponseEntity.ok(searchService.searchFileOrFolderByTemplate(objectTemplate, userId));
+    }
+
+    @GetMapping(WORKSPACE)
+    public ResponseEntity<WorkspaceResultDTO> searchAll() {
+        return ResponseEntity.ok(searchService.searchAll(userId));
     }
 
     @GetMapping(FILES)

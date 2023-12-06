@@ -5,12 +5,14 @@ import edu.nau.cs.meta.service.dto.search.ChunkSearchResultDTO;
 import edu.nau.cs.meta.service.dto.search.FileSearchResultDTO;
 import edu.nau.cs.meta.service.dto.search.FolderSearchResultDTO;
 import edu.nau.cs.meta.service.dto.search.SearchResultObjectDTO;
+import edu.nau.cs.meta.service.dto.search.WorkspaceResultDTO;
 import edu.nau.cs.meta.service.exception.CsChunkDoesNotExistsException;
 import edu.nau.cs.meta.service.exception.CsFileObjectDoesNotExistsException;
 import edu.nau.cs.meta.service.exception.CsFolderObjectDoesNotExistsException;
 import edu.nau.cs.meta.service.mapper.search.ChunkSearchResultMapper;
 import edu.nau.cs.meta.service.mapper.search.FileSearchResultMapper;
 import edu.nau.cs.meta.service.mapper.search.FolderSearchResultMapper;
+import edu.nau.cs.meta.service.mapper.search.WorkspaceMapper;
 import edu.nau.cs.meta.service.repository.ChunkRepository;
 import edu.nau.cs.meta.service.repository.FileObjectRepository;
 import edu.nau.cs.meta.service.repository.FolderObjectRepository;
@@ -33,6 +35,7 @@ public class SearchServiceImpl implements SearchService {
     private final ChunkSearchResultMapper chunkSearchResultMapper;
     private final FileSearchResultMapper fileSearchResultMapper;
     private final FolderSearchResultMapper folderSearchResultMapper;
+    private final WorkspaceMapper workspaceMapper;
 
     @Override
     public List<SearchResultObjectDTO> searchFileOrFolderByTemplate(String objectTemplate, String userId) {
@@ -66,6 +69,13 @@ public class SearchServiceImpl implements SearchService {
         return folderObjectRepository.findByIdAndUserId(folderId, userId)
                 .map(folderSearchResultMapper::mapToFolderSearchResultDTO)
                 .orElseThrow(() -> new CsFolderObjectDoesNotExistsException(userId, folderId));
+    }
+
+    @Override
+    public WorkspaceResultDTO searchAll(String userId) {
+        return folderObjectRepository.findByUserIdAndParentFolderIdIsNull(userId)
+                .map(workspaceMapper::mapToWorkspace)
+                .orElseThrow(() -> new CsFolderObjectDoesNotExistsException("User data does not exists for user = " + userId));
     }
 
 }

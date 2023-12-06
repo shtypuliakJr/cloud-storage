@@ -2,6 +2,7 @@ package edu.nau.cs.meta.service.mapper.search;
 
 import edu.nau.cs.meta.service.dto.search.FileSearchResultDTO;
 import edu.nau.cs.meta.service.dto.search.FolderSearchResultDTO;
+import edu.nau.cs.meta.service.dto.search.WorkspaceResultDTO;
 import edu.nau.cs.meta.service.entity.FolderObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,17 +13,30 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
-public class FolderSearchResultMapper {
+public class WorkspaceMapper {
 
     private final FileSearchResultMapper fileSearchResultMapper;
 
-    public FolderSearchResultDTO mapToFolderSearchResultDTO(FolderObject folderObject) {
-        return this.mapToFolderSearchResultDTO(folderObject, 1L);
+    public WorkspaceResultDTO mapToWorkspace(FolderObject rootFolderObject) {
+
+        List<FileSearchResultDTO> childFiles = rootFolderObject.getCurrentFolderChildFiles().stream()
+                .map(fileObject -> fileSearchResultMapper.mapToFileSearchResultDTO(fileObject, true))
+                .toList();
+        List<FolderSearchResultDTO> childFolders = Optional.of(getChildFolders(rootFolderObject, Long.MAX_VALUE))
+                .filter(folders -> !folders.isEmpty())
+                .orElse(null);
+
+        return WorkspaceResultDTO.builder()
+                .childFolders(childFolders)
+                .childFiles(childFiles)
+                .userId(rootFolderObject.getUser().getId())
+                .build();
     }
 
-    public FolderSearchResultDTO mapToFolderSearchResultDTO(FolderObject folderObject, long depth) {
+    private FolderSearchResultDTO mapToChildFolder(FolderObject folderObject, long depth) {
+
         List<FileSearchResultDTO> childFiles = folderObject.getCurrentFolderChildFiles().stream()
-                .map(fileSearchResultMapper::mapToFileSearchResultDTO)
+                .map(fileObject -> fileSearchResultMapper.mapToFileSearchResultDTO(fileObject, true))
                 .toList();
         List<FolderSearchResultDTO> childFolders = Optional.of(getChildFolders(folderObject, depth))
                 .filter(folders -> !folders.isEmpty())
@@ -45,11 +59,10 @@ public class FolderSearchResultMapper {
     }
 
     private List<FolderSearchResultDTO> getChildFolders(FolderObject folderObject, long depth) {
-        System.out.println(folderObject.getFolderName() + " " + depth);
         return depth == 0
                 ? Collections.emptyList()
                 : folderObject.getCurrentFolderChildFolders().stream()
-                .map(childFolder -> this.mapToFolderSearchResultDTO(childFolder, depth - 1))
+                .map(childFolder -> this.mapToChildFolder(childFolder, depth - 1))
                 .toList();
     }
 

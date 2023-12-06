@@ -4,6 +4,7 @@ import edu.nau.cs.meta.service.dto.search.ChunkSearchResultDTO;
 import edu.nau.cs.meta.service.dto.search.FileSearchResultDTO;
 import edu.nau.cs.meta.service.dto.search.FolderSearchResultDTO;
 import edu.nau.cs.meta.service.dto.search.SearchResultObjectDTO;
+import edu.nau.cs.meta.service.dto.search.WorkspaceResultDTO;
 
 import java.util.List;
 
@@ -18,5 +19,7 @@ public interface SearchService {
     FileSearchResultDTO searchFileById(String fileId, String userId);
 
     FolderSearchResultDTO searchFolderById(String folderId, String userId);
+
+    WorkspaceResultDTO searchAll(String userId);
 
 }

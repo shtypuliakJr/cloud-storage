@@ -16,4 +16,6 @@ public interface FolderObjectRepository extends JpaRepository<FolderObject, Stri
 
     Optional<FolderObject> findByIdAndUserId(String folderId, String userId);
 
+    Optional<FolderObject> findByUserIdAndParentFolderIdIsNull(String userId);
+
 }
