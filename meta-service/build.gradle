@@ -26,6 +26,9 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
 	implementation "org.springframework.boot:spring-boot-starter-web"
 
+	implementation group: 'io.awspring.cloud', name: 'spring-cloud-aws-starter', version: '3.0.0'
+	implementation "io.awspring.cloud:spring-cloud-aws-starter-sqs:3.0.0"
+
 	compileOnly "org.projectlombok:lombok"
 	runtimeOnly "org.postgresql:postgresql"
 

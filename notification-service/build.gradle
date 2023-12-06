@@ -23,15 +23,18 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "io.awspring.cloud:spring-cloud-aws-starter:3.0.0"
+    implementation "io.awspring.cloud:spring-cloud-aws-starter-sqs:3.0.0"
+
     implementation "org.springdoc:springdoc-openapi-ui:${openapiVer}"
     implementation "org.openapitools:jackson-databind-nullable:${openapiJacksonVer}"
-    compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'org.postgresql:postgresql'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compileOnly "org.projectlombok:lombok"
+    runtimeOnly "org.postgresql:postgresql"
+    annotationProcessor "org.projectlombok:lombok"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
 test {
@@ -46,16 +49,12 @@ openApiGenerate {
     generatorName = "spring"
     inputSpec = "$rootDir/src/main/resources/server-api.yml"
     outputDir = "$buildDir/generated"
-    apiPackage = "edu.nau.cs.file.service.controller"
-    modelPackage = "edu.nau.cs.file.service.model"
+    apiPackage = "edu.nau.cs.notification.service.controller"
+    modelPackage = "edu.nau.cs.notification.service.model"
     configOptions = [
             dateLibrary  : "java8",
             interfaceOnly: "true",
             useTags      : "true"
-    ]
-    importMappings = [
-            "FileUploadDTO": "edu.nau.cs.file.service.dto.FileUploadDTO",
-            "ErrorDTO": "edu.nau.cs.file.service.dto.ErrorDTO",
     ]
 }
 

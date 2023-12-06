@@ -1,0 +1,18 @@
+openapi: 3.0.3
+info:
+  title: Cloud Storage Notification Service
+  version: 1.0.0
+paths:
+  /cs-api/workspace:
+    get:
+      tags:
+        - get-workspace-changes-controller
+      summary: Get workspace changes
+      operationId: getWorkspaceChanges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/jsom:
+              schema:
+                type: string

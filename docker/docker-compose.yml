@@ -37,6 +37,30 @@ services:
       - "8011:80"
       - "6002:6001"
     environment:
+      AWS_ACCESS_KEY_ID: dummy_key
+      AWS_SECRET_ACCESS_KEY: dummy_secret
+      AWS_DEFAULT_REGION: us-east-1
+      ENV_VAR_NAME: ${COMPOSE_PROJECT_NAME}
+    networks:
+      - ${NETWORK_NAME}
+
+
+  cs-notification-service:
+    build:
+      context: ../notification-service
+      dockerfile: ./docker/Dockerfile
+      args:
+        VERSION: undefined
+    depends_on:
+      - db-cloud-storage
+    hostname: cs-notification-service
+    ports:
+      - "8012:80"
+      - "6003:6001"
+    environment:
+      AWS_ACCESS_KEY_ID: dummy_key
+      AWS_SECRET_ACCESS_KEY: dummy_secret
+      AWS_DEFAULT_REGION: us-east-1
       ENV_VAR_NAME: ${COMPOSE_PROJECT_NAME}
     networks:
       - ${NETWORK_NAME}
@@ -79,6 +103,43 @@ services:
       ENV_VAR_NAME: ${COMPOSE_PROJECT_NAME}
     networks:
       - ${NETWORK_NAME}
+
+
+  cs-localstack:
+    image: localstack/localstack:0.12.16
+    container_name: cs-localstack
+    hostname: cs-localstack
+    ports:
+      - '4566-4597:4566-4597'
+    environment:
+      - SERVICES=sqs
+      - DEBUG=true
+      - DEFAULT_REGION=us-east-1
+      - SQS_DOCKER_NETWORK=docker_cs_network
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - HOSTNAME_EXTERNAL=cs-localstack
+      - AWS_ACCESS_KEY_ID=dummy_key
+      - AWS_SECRET_ACCESS_KEY=dummy_secret
+      - AWS_DEFAULT_REGION=us-east-1
+    volumes:
+      - ./localstack_setup:/docker-entrypoint-initaws.d
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - ${NETWORK_NAME}
+
+#  redis:
+#    image: redis:latest
+#    restart: always
+#    ports:
+#      - "6379:6379"
+#    volumes:
+#      - /path/to/local/dаta:/root/redis
+#      - /path/to/local/redis.conf:/usr/local/etc/redis/redis.conf
+#    environment:
+#      - REDIS_PASSWORD=my-password
+#      - REDIS_PORT=6379
+#      - REDIS_DATABASES=16
 
 
 volumes:
