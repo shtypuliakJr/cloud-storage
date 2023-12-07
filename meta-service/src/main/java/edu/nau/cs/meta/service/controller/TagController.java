@@ -6,10 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static edu.nau.cs.meta.service.constants.Endpoint.BASE_ENDPOINT;
+import static edu.nau.cs.meta.service.constants.Endpoint.TAGS;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(BASE_ENDPOINT)
+@RequestMapping(BASE_ENDPOINT + TAGS)
 public class TagController {
 
     public ResponseEntity<Void> getObjectTag() {

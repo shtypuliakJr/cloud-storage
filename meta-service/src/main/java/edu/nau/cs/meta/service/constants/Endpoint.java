@@ -10,5 +10,7 @@ public class Endpoint {
     public static final String SEARCH = "/search";
     public static final String DEVICES = "/devices";
     public static final String WORKSPACE = "/workspace";
+    public static final String TAGS = "/tags";
+    public static final String USERS = "/users";
 
 }
