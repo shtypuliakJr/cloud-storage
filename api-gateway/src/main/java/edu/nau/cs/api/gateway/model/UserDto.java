@@ -1,17 +1,18 @@
-package edu.nau.cs.auth.service.model;
+package edu.nau.cs.api.gateway.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AuthResponse {
+@Data
+public class UserDto {
 
-    private String accessToken;
-    private String refreshToken;
+    private Long id;
+    private String login;
+    private String token;
 
 }

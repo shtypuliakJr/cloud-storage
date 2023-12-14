@@ -65,6 +65,24 @@ services:
     networks:
       - ${NETWORK_NAME}
 
+  cs-api-gateway:
+    build:
+      context: ../api-gateway
+      dockerfile: ./docker/Dockerfile
+      args:
+        VERSION: undefined
+    depends_on:
+      - cs-file-service
+      - cs-meta-service
+      - cs-notification-service
+    ports:
+      - "8014:80"
+      - "6004:6001"
+    environment:
+      ENV_VAR_NAME: ${COMPOSE_PROJECT_NAME}
+    networks:
+      - ${NETWORK_NAME}
+
 
   db-cloud-storage:
     image: postgres:12.4-alpine
@@ -127,19 +145,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - ${NETWORK_NAME}
-
-#  redis:
-#    image: redis:latest
-#    restart: always
-#    ports:
-#      - "6379:6379"
-#    volumes:
-#      - /path/to/local/dаta:/root/redis
-#      - /path/to/local/redis.conf:/usr/local/etc/redis/redis.conf
-#    environment:
-#      - REDIS_PASSWORD=my-password
-#      - REDIS_PORT=6379
-#      - REDIS_DATABASES=16
 
 
 volumes:

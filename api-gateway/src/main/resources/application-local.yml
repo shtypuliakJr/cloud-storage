@@ -20,10 +20,3 @@ url:
     meta: http://localhost:8011
     notification: http://localhost:8012
     auth: http://localhost:9000
-
-
-auth:
-  enabled: false
-  mock:
-    user:
-      id: 2bb8e3d3-77fc-46c2-9ddc-8e83d593142d
